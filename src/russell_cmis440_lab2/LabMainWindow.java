@@ -38,7 +38,52 @@ public class LabMainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        myMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        startClientMenuItem = new javax.swing.JMenuItem();
+        startServerMenuItem = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Nb.Desktop.background"));
+
+        fileMenu.setText("File");
+
+        startClientMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        startClientMenuItem.setText("Start Client");
+        fileMenu.add(startClientMenuItem);
+
+        startServerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        startServerMenuItem.setText("Start Server");
+        fileMenu.add(startServerMenuItem);
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        exitMenuItem.setText("Exit");
+        fileMenu.add(exitMenuItem);
+
+        myMenuBar.add(fileMenu);
+
+        editMenu.setText("Edit");
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setText("Copy Output");
+        editMenu.add(jMenuItem4);
+
+        myMenuBar.add(editMenu);
+
+        helpMenu.setText("Help");
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setText("Instructions");
+        helpMenu.add(jMenuItem5);
+
+        myMenuBar.add(helpMenu);
+
+        setJMenuBar(myMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,7 +93,7 @@ public class LabMainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 671, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
         pack();
@@ -66,6 +111,15 @@ public class LabMainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuBar myMenuBar;
+    private javax.swing.JMenuItem startClientMenuItem;
+    private javax.swing.JMenuItem startServerMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }
