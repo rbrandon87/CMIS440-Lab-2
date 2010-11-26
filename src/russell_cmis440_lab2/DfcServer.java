@@ -3,6 +3,8 @@ package russell_cmis440_lab2;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
+import javax.swing.JOptionPane; //For Exception Handling
+import java.util.concurrent.ExecutionException;
 
 /**
 * Program Name:
@@ -26,7 +28,7 @@ import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 
 
 
-public class DfcServer {
+public class DfcServer extends SwingWorker<Void, Void> {
 
     ExecutorService myApplication = null;
     UdpServer myUdpServer = null;
@@ -36,6 +38,35 @@ public class DfcServer {
         myApplication = Executors.newCachedThreadPool();
     }
 
+    @Override
+    public Void doInBackground() throws Exception{
+        try{
+            myApplication.execute(myUdpServer);
+            myApplication.shutdown();
+
+        }catch(Exception exception){
+            JOptionPane.showMessageDialog(null,"Unknown Exception on thread run"
+                    + ".\n" + exception.getMessage(),
+                    "Exception",
+                    JOptionPane.ERROR_MESSAGE);
+        }finally{
+            return null;
+        }
+
+
+    }
+
+    @Override
+    public void done(){
+        try {
+            setProgress(95);
+            get();
+        } catch (final InterruptedException ex) {
+            throw new RuntimeException(ex);
+        } catch (final ExecutionException ex) {
+            throw new RuntimeException(ex.getCause());
+        }
+    }
 
 
 }
