@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
+import javax.swing.JOptionPane; //For Exception Handling
 
 
 /**
@@ -33,10 +35,13 @@ import java.util.logging.Logger;
 public class UdpServer implements Runnable {
 
     private DatagramSocket myListenSocket;
+    private JTextArea updateOutputTextArea = null;
 
-    public UdpServer(int aServerPort){
+    public UdpServer(int aServerPort, JTextArea aJTextArea){
         try{
             myListenSocket = new DatagramSocket(aServerPort);
+            updateOutputTextArea = aJTextArea;
+            
 
         }catch (SocketException exception){
 
@@ -44,12 +49,14 @@ public class UdpServer implements Runnable {
     }
 
     public void run(){
-
+        
         while (true){
             try {
-                byte[] myIncomingData = new byte[100];
+                byte[] myIncomingData = new byte[1024];
                 DatagramPacket myReceivePacket = new DatagramPacket(myIncomingData, myIncomingData.length);
                 myListenSocket.receive(myReceivePacket);
+                System.out.println(new String (myReceivePacket.getData()));
+                updateOutputTextArea.append(new String (myReceivePacket.getData()));
             } catch (IOException exception) {
             }
 

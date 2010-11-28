@@ -29,7 +29,7 @@ public class Buffer {
     private final ArrayBlockingQueue mySharedBuffer;
 
     public Buffer(){
-        mySharedBuffer = new ArrayBlockingQueue<FileStats>(5);
+        mySharedBuffer = new ArrayBlockingQueue<FileStats>(100);
     }
 
     public void set( FileStats newFileStatBuffer){

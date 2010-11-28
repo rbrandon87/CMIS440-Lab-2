@@ -25,14 +25,22 @@
                 <Property name="text" type="java.lang.String" value="Start Server"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="stopClientMenuItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Y"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Stop Client"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="stopServerMenuItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Z"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Stop Server"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
@@ -142,37 +150,40 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblConnectTo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Component id="txtClientIpAddress" min="-2" pref="101" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="1">
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblClientIpAddress" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace min="16" pref="16" max="16" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblClientPort" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jTextField2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtClientPort" min="-2" pref="49" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblChooseFiles" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jFileChooser1" alignment="0" pref="534" max="32767" attributes="0"/>
+                      <Component id="myFileChooser" alignment="0" pref="534" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClientStart" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClientCancel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
+                          <Component id="clientProgressBar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -185,29 +196,29 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblConnectTo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtClientIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblClientPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblClientIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtClientPort" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblChooseFiles" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jFileChooser1" min="-2" max="-2" attributes="0"/>
+                  <Component id="myFileChooser" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClientStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClientCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jProgressBar1" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="clientProgressBar" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="67" max="32767" attributes="0"/>
               </Group>
@@ -215,49 +226,64 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="lblConnectTo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Connect to:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtClientIpAddress">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
+            <Property name="text" type="java.lang.String" value="127.0.0.1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="lblClientIpAddress">
           <Properties>
             <Property name="text" type="java.lang.String" value="IP Address"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtClientPort">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
+            <Property name="text" type="java.lang.String" value="5000"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="lblClientPort">
           <Properties>
             <Property name="text" type="java.lang.String" value="Port"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFileChooser" name="jFileChooser1">
+        <Component class="javax.swing.JFileChooser" name="myFileChooser">
+          <Properties>
+            <Property name="controlButtonsAreShown" type="boolean" value="false"/>
+            <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new FileNameExtensionFilter(&quot;Text Files&quot;, &quot;txt&quot;)" type="code"/>
+            </Property>
+            <Property name="fileSelectionMode" type="int" value="2"/>
+            <Property name="multiSelectionEnabled" type="boolean" value="true"/>
+          </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="lblChooseFiles">
           <Properties>
             <Property name="text" type="java.lang.String" value="Choose the files to process:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnClientStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="Start"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientStartActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnClientCancel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+        <Component class="javax.swing.JProgressBar" name="clientProgressBar">
+          <Properties>
+            <Property name="stringPainted" type="boolean" value="true"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -277,17 +303,18 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblServerPort" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtServerPort" min="-2" pref="57" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField4" min="-2" pref="123" max="-2" attributes="0"/>
+                          <Component id="lblServerIpAddress" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtServerIpAddress" min="-2" pref="123" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" pref="522" max="32767" attributes="0"/>
-                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblServerOutput" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnServerStart" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnServerStop" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -298,41 +325,43 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblServerIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtServerIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblServerOutput" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="397" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <Component id="btnServerStart" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnServerStop" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="lblServerPort">
           <Properties>
             <Property name="text" type="java.lang.String" value="Listen on Port:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="txtServerPort">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
+            <Property name="text" type="java.lang.String" value="5000"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="lblServerIpAddress">
           <Properties>
             <Property name="text" type="java.lang.String" value="Current IP Address:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="txtServerIpAddress">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField4"/>
+            <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -342,22 +371,34 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="txtServerOutput">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Courier New" size="12" style="0"/>
+                </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel7">
+        <Component class="javax.swing.JLabel" name="lblServerOutput">
           <Properties>
             <Property name="text" type="java.lang.String" value="Output:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btnServerStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="Start Listening"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServerStartActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnServerStop">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Stop Listening"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

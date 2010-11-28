@@ -11,6 +11,16 @@ package russell_cmis440_lab2;
 * Things you what me to know before I grade your work:
 */
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
+import java.awt.Cursor;
+import java.awt.datatransfer.*;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+
 /** What is this?*
 *|----------------------------------------------------------------------------|
 *|                                CRC:                                        |
@@ -22,7 +32,8 @@ package russell_cmis440_lab2;
 
 
         
-public class LabMainWindow extends javax.swing.JFrame {
+public class LabMainWindow extends javax.swing.JFrame 
+        implements PropertyChangeListener{
 
     /** Creates new form LabMainWindow */
     public LabMainWindow() {
@@ -39,31 +50,32 @@ public class LabMainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         clientPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jFileChooser1 = new javax.swing.JFileChooser();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        lblConnectTo = new javax.swing.JLabel();
+        txtClientIpAddress = new javax.swing.JTextField();
+        lblClientIpAddress = new javax.swing.JLabel();
+        txtClientPort = new javax.swing.JTextField();
+        lblClientPort = new javax.swing.JLabel();
+        myFileChooser = new javax.swing.JFileChooser();
+        lblChooseFiles = new javax.swing.JLabel();
+        btnClientStart = new javax.swing.JButton();
+        btnClientCancel = new javax.swing.JButton();
+        clientProgressBar = new javax.swing.JProgressBar();
         serverPanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        lblServerPort = new javax.swing.JLabel();
+        txtServerPort = new javax.swing.JTextField();
+        lblServerIpAddress = new javax.swing.JLabel();
+        txtServerIpAddress = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        txtServerOutput = new javax.swing.JTextArea();
+        lblServerOutput = new javax.swing.JLabel();
+        btnServerStart = new javax.swing.JButton();
+        btnServerStop = new javax.swing.JButton();
         myMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         startClientMenuItem = new javax.swing.JMenuItem();
         startServerMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        stopClientMenuItem = new javax.swing.JMenuItem();
+        stopServerMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         copyOutputMenuItem = new javax.swing.JMenuItem();
@@ -75,21 +87,34 @@ public class LabMainWindow extends javax.swing.JFrame {
 
         clientPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Client:"));
 
-        jLabel1.setText("Connect to:");
+        lblConnectTo.setText("Connect to:");
 
-        jTextField1.setText("jTextField1");
+        txtClientIpAddress.setText("127.0.0.1");
 
-        jLabel2.setText("IP Address");
+        lblClientIpAddress.setText("IP Address");
 
-        jTextField2.setText("jTextField2");
+        txtClientPort.setText("5000");
 
-        jLabel3.setText("Port");
+        lblClientPort.setText("Port");
 
-        jLabel4.setText("Choose the files to process:");
+        myFileChooser.setControlButtonsAreShown(false);
+        myFileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
+        myFileChooser.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
+        myFileChooser.setMultiSelectionEnabled(true);
 
-        jButton1.setText("Start");
+        lblChooseFiles.setText("Choose the files to process:");
 
-        jButton2.setText("Cancel");
+        btnClientStart.setText("Start");
+        btnClientStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientStartActionPerformed(evt);
+            }
+        });
+
+        btnClientCancel.setText("Cancel");
+        btnClientCancel.setEnabled(false);
+
+        clientProgressBar.setStringPainted(true);
 
         javax.swing.GroupLayout clientPanelLayout = new javax.swing.GroupLayout(clientPanel);
         clientPanel.setLayout(clientPanelLayout);
@@ -101,30 +126,32 @@ public class LabMainWindow extends javax.swing.JFrame {
                         .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(clientPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)
+                                .addComponent(lblConnectTo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtClientIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clientPanelLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
+                                .addComponent(lblClientIpAddress)
                                 .addGap(39, 39, 39)))
                         .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(clientPanelLayout.createSequentialGroup()
                                 .addGap(16, 16, 16)
-                                .addComponent(jLabel3))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblClientPort))
+                            .addGroup(clientPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtClientPort, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(clientPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                        .addComponent(lblChooseFiles))
+                    .addComponent(myFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
                     .addGroup(clientPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)
+                        .addComponent(btnClientStart)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnClientCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(clientProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         clientPanelLayout.setVerticalGroup(
@@ -133,44 +160,53 @@ public class LabMainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblConnectTo)
+                        .addComponent(txtClientIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(clientPanelLayout.createSequentialGroup()
                         .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
+                            .addComponent(lblClientPort)
+                            .addComponent(lblClientIpAddress))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtClientPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(lblChooseFiles)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(myFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2))
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnClientStart)
+                        .addComponent(btnClientCancel))
+                    .addComponent(clientProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
         serverPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Server:"));
 
-        jLabel5.setText("Listen on Port:");
+        lblServerPort.setText("Listen on Port:");
 
-        jTextField3.setText("jTextField3");
+        txtServerPort.setText("5000");
 
-        jLabel6.setText("Current IP Address:");
+        lblServerIpAddress.setText("Current IP Address:");
 
-        jTextField4.setText("jTextField4");
+        txtServerIpAddress.setEditable(false);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtServerOutput.setColumns(20);
+        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txtServerOutput.setRows(5);
+        jScrollPane1.setViewportView(txtServerOutput);
 
-        jLabel7.setText("Output:");
+        lblServerOutput.setText("Output:");
 
-        jButton3.setText("Start Listening");
+        btnServerStart.setText("Start Listening");
+        btnServerStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnServerStartActionPerformed(evt);
+            }
+        });
+
+        btnServerStop.setText("Stop Listening");
+        btnServerStop.setEnabled(false);
 
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
         serverPanel.setLayout(serverPanelLayout);
@@ -180,16 +216,17 @@ public class LabMainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(serverPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(lblServerPort)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel6)
+                        .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblServerIpAddress)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtServerIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                    .addComponent(jLabel7)
-                    .addComponent(jButton3))
+                    .addComponent(lblServerOutput)
+                    .addComponent(btnServerStart)
+                    .addComponent(btnServerStop))
                 .addContainerGap())
         );
         serverPanelLayout.setVerticalGroup(
@@ -197,17 +234,19 @@ public class LabMainWindow extends javax.swing.JFrame {
             .addGroup(serverPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblServerPort)
+                    .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblServerIpAddress)
+                    .addComponent(txtServerIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(jLabel7)
+                .addComponent(lblServerOutput)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addComponent(btnServerStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnServerStop)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         fileMenu.setText("File");
@@ -220,11 +259,15 @@ public class LabMainWindow extends javax.swing.JFrame {
         startServerMenuItem.setText("Start Server");
         fileMenu.add(startServerMenuItem);
 
-        jMenuItem1.setText("Stop Client");
-        fileMenu.add(jMenuItem1);
+        stopClientMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        stopClientMenuItem.setText("Stop Client");
+        stopClientMenuItem.setEnabled(false);
+        fileMenu.add(stopClientMenuItem);
 
-        jMenuItem2.setText("Stop Server");
-        fileMenu.add(jMenuItem2);
+        stopServerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        stopServerMenuItem.setText("Stop Server");
+        stopServerMenuItem.setEnabled(false);
+        fileMenu.add(stopServerMenuItem);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         exitMenuItem.setText("Exit");
@@ -272,50 +315,234 @@ public class LabMainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnClientStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientStartActionPerformed
+        startProcessingFiles();
+    }//GEN-LAST:event_btnClientStartActionPerformed
+
+    private void btnServerStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServerStartActionPerformed
+        startServerListening();
+    }//GEN-LAST:event_btnServerStartActionPerformed
+
     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new LabMainWindow().setVisible(true);
             }
         });
     }
 
+    /** Creates ThreadControl object to begin file processing.
+    * This method disables the Start button, Start Menu Item, turns the cursor
+    * into a working icon, gets the case sensitive check and also the delimiter,
+    * and then creates a ThreadControl object and executes it on a new
+    * SwingWorker worker thread so as not to freeze the GUI during processing.
+    * @TheCs Cohesion - Creates ThreadControl object to begin file processing.
+    * Completeness - Completely creates ThreadControl object to begin
+    *                file processing.
+    * Convenience - Simply creates ThreadControl object to begin file processing
+    * Clarity - It is simple to understand that this creates ThreadControl
+    *           object to begin file processing.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    * @precondition Must have at least one text file selected for processing.
+    * @throws exception if at least one file is not chosen.
+    * @exception General exception capture
+    */
+    private void startProcessingFiles(){
+        try{
+            txtServerOutput.setText("");
+            String tempIpAddressHolder = txtClientIpAddress.getText();
+            int tempPortHolder = Integer.parseInt(txtClientPort.getText());
+            setClientControlsToWait();
+            if (myFileChooser.getSelectedFiles().length <= 0){
+                throw new Exception("Must select atleast one file");
+            }
+
+            String[] selectedFileNames =
+                    new String[myFileChooser.getSelectedFiles().length];
+            int counter = 0;
+            for (File element: myFileChooser.getSelectedFiles()){
+                selectedFileNames[counter] = element.toString();
+                counter++;
+            }
+            DfcClient myDfcClient = new DfcClient(selectedFileNames, tempIpAddressHolder, tempPortHolder);
+            myDfcClient.addPropertyChangeListener(this);
+            myDfcClient.execute(); //Begin Worker Thread
+
+        }catch (NumberFormatException exception) {
+            setClientControlsToActive();
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on Start Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }catch (Exception exception) {
+            setClientControlsToActive();
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on Start Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void startServerListening(){
+        try{
+            setServerControlsToWait();
+            txtServerOutput.setText("Waiting for Data...\n");
+            int tempPortHolder = Integer.parseInt(txtServerPort.getText());
+            DfcServer myDfcServer = new DfcServer(tempPortHolder, txtServerOutput);
+            myDfcServer.addPropertyChangeListener(this);
+            myDfcServer.execute(); //Begin Worker Thread
+        }catch (NumberFormatException exception){
+            setServerControlsToActive();
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on Start Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }catch (Exception exception){
+            setServerControlsToActive();
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on Start Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+
+    /** Detects progress of file processing from ThreadControl object.
+    * Basically this will determine if the setProgress has been called from
+    * the ThreadControl object and will increment the progress bar if so.
+    * Will also determine if ThreadControl is done, and if so will call
+    * displayOutputFile.
+    * @TheCs Cohesion - Detects progress of file processing from ThreadControl
+    *                   object.
+    * Completeness - Completely detects progress of file processing from
+    *                ThreadControl object.
+    * Convenience - Simply detects progress of file processing from
+    *               ThreadControl object.
+    * Clarity - It is simple to understand that this detects progress of file
+    *           processing from ThreadControl object.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    * @param PropertyChangeEvent Determine progress of ThreadControl
+    */
+    public void propertyChange(PropertyChangeEvent evt){
+        if ("progress".equals(evt.getPropertyName())){
+            int progress = (Integer) evt.getNewValue();
+            clientProgressBar.setValue(progress);
+            if (progress == 95){
+                setClientControlsToActive();
+                clientProgressBar.setValue(100);
+            }
+        }
+    }
+
+    /** Disables Start Menu, Start Button,and sets cursor to wait icon.
+    * @TheCs Cohesion - Disables Start Menu/Start Button/sets cursor to wait.
+    * Completeness - Completely disables Start Menu, Start Button,and sets
+    *                cursor to wait icon.
+    * Convenience - Simply disables Start Menu, Start Button,and sets cursor
+    *               to wait icon.
+    * Clarity - It is simple to understand that this Disables Start Menu,
+    *           Start Button,and sets cursor to wait icon.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    public void setClientControlsToWait(){
+        btnClientStart.setEnabled(false);
+        startClientMenuItem.setEnabled(false);
+        btnClientCancel.setEnabled(true);
+        stopClientMenuItem.setEnabled(true);
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    }
+    /** Enables Start Menu, Start Button,and sets cursor to normal icon.
+    * @TheCs Cohesion - Enables Start Menu/Start Button/sets cursor to normal.
+    * Completeness - Completely enables Start Menu, Start Button,and sets
+    *                cursor to normal icon.
+    * Convenience - Simply enables Start Menu, Start Button,and sets cursor
+    *               to normal icon.
+    * Clarity - It is simple to understand that this enables Start Menu,
+    *           Start Button,and sets cursor to normal icon.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    public void setClientControlsToActive(){
+        btnClientStart.setEnabled(true);
+        startClientMenuItem.setEnabled(true);
+        btnClientCancel.setEnabled(false);
+        stopClientMenuItem.setEnabled(false);
+        setCursor(null);
+        Toolkit.getDefaultToolkit().beep();
+    }
+
+    /** Disables Start Menu, Start Button,and sets cursor to wait icon.
+    * @TheCs Cohesion - Disables Start Menu/Start Button/sets cursor to wait.
+    * Completeness - Completely disables Start Menu, Start Button,and sets
+    *                cursor to wait icon.
+    * Convenience - Simply disables Start Menu, Start Button,and sets cursor
+    *               to wait icon.
+    * Clarity - It is simple to understand that this Disables Start Menu,
+    *           Start Button,and sets cursor to wait icon.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    public void setServerControlsToWait(){
+        btnServerStart.setEnabled(false);
+        startServerMenuItem.setEnabled(false);
+        btnServerStop.setEnabled(true);
+        stopServerMenuItem.setEnabled(true);
+
+    }
+    /** Enables Start Menu, Start Button,and sets cursor to normal icon.
+    * @TheCs Cohesion - Enables Start Menu/Start Button/sets cursor to normal.
+    * Completeness - Completely enables Start Menu, Start Button,and sets
+    *                cursor to normal icon.
+    * Convenience - Simply enables Start Menu, Start Button,and sets cursor
+    *               to normal icon.
+    * Clarity - It is simple to understand that this enables Start Menu,
+    *           Start Button,and sets cursor to normal icon.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    public void setServerControlsToActive(){
+        btnServerStart.setEnabled(true);
+        startServerMenuItem.setEnabled(true);
+        btnServerStop.setEnabled(false);
+        stopServerMenuItem.setEnabled(false);
+        Toolkit.getDefaultToolkit().beep();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClientCancel;
+    private javax.swing.JButton btnClientStart;
+    private javax.swing.JButton btnServerStart;
+    private javax.swing.JButton btnServerStop;
     private javax.swing.JPanel clientPanel;
     private javax.swing.JPanel clientPanel1;
+    private javax.swing.JProgressBar clientProgressBar;
     private javax.swing.JMenuItem copyOutputMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem instructionsMenuItem;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblChooseFiles;
+    private javax.swing.JLabel lblClientIpAddress;
+    private javax.swing.JLabel lblClientPort;
+    private javax.swing.JLabel lblConnectTo;
+    private javax.swing.JLabel lblServerIpAddress;
+    private javax.swing.JLabel lblServerOutput;
+    private javax.swing.JLabel lblServerPort;
+    private javax.swing.JFileChooser myFileChooser;
     private javax.swing.JMenuBar myMenuBar;
     private javax.swing.JPanel serverPanel;
     private javax.swing.JMenuItem startClientMenuItem;
     private javax.swing.JMenuItem startServerMenuItem;
+    private javax.swing.JMenuItem stopClientMenuItem;
+    private javax.swing.JMenuItem stopServerMenuItem;
+    private javax.swing.JTextField txtClientIpAddress;
+    private javax.swing.JTextField txtClientPort;
+    private javax.swing.JTextField txtServerIpAddress;
+    private javax.swing.JTextArea txtServerOutput;
+    private javax.swing.JTextField txtServerPort;
     // End of variables declaration//GEN-END:variables
 
 }

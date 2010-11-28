@@ -88,24 +88,18 @@ public class FileProcessor implements Runnable{
             readInputFile = new Scanner(
                     new File(myFileNameString));
             readInputFile.useDelimiter("\\z");
-            String extRegex = "[\\p{Alpha},\\']*";
-            Pattern pattern = Pattern.compile(extRegex);
-            Matcher matcher = pattern.matcher(readInputFile.next());
-            if (matcher.find()){
-                
-            }else{
-                throw new Exception("Error with File Regex Filter");
-            }
-
-            for(int i=0; i< matcher.groupCount(); i++){
-                myFileStats.addWordToMap(matcher.group(i).length());
+            myTempLineHolder = readInputFile.next();
+            String extRegex = "([\\p{Alpha},\\']*)";
+            Pattern pattern = Pattern.compile(extRegex, Pattern.MULTILINE);
+            Matcher matcher = pattern.matcher(myTempLineHolder);
+            while (matcher.find()){
+                if (matcher.group(1).length() != 0){
+                    myFileStats.addWordToMap(matcher.group(1).length());
+                }
 
             }
 
-
-            synchronized(mySharedBuffer){
-                mySharedBuffer.set(myFileStats);
-            }
+            mySharedBuffer.set(myFileStats);
 
 
         }catch(FileNotFoundException exception){

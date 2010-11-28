@@ -109,7 +109,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
             }
             fileProcessors = new ArrayList<FileProcessor>();
             mySharedBuffer = new Buffer();
-            myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, aServerPort, mySharedBuffer);
+            myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, aServerPort, mySharedBuffer, getNumOfFiles());
             myApplication = Executors.newCachedThreadPool();
         }catch(Exception exception){
             throw new Exception(exception);
@@ -229,7 +229,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */
-    public String getNumOfFiles(){
+    private String getNumOfFiles(){
         return Integer.toString(myNumOfFiles);
     }
 
