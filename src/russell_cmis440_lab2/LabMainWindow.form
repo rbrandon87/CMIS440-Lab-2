@@ -16,6 +16,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Start Client"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startClientMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="startServerMenuItem">
               <Properties>
@@ -24,6 +27,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Start Server"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startServerMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="stopClientMenuItem">
               <Properties>
@@ -32,7 +38,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Stop Client"/>
                 <Property name="enabled" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopClientMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="stopServerMenuItem">
               <Properties>
@@ -42,6 +52,9 @@
                 <Property name="text" type="java.lang.String" value="Stop Server"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopServerMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
               <Properties>
@@ -50,6 +63,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -65,6 +81,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Copy Output"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyOutputMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -80,6 +99,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Instructions"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="instructionsMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -279,6 +301,9 @@
             <Property name="text" type="java.lang.String" value="Cancel"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientCancelActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JProgressBar" name="clientProgressBar">
           <Properties>
@@ -309,11 +334,21 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblServerIpAddress" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtServerIpAddress" min="-2" pref="123" max="-2" attributes="0"/>
+                          <Component id="lblServerActualIp" min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="0" pref="522" max="32767" attributes="0"/>
-                      <Component id="lblServerOutput" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnServerStart" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblServerOutput" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnClearServerOutput" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnServerStart" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="serverProgressBar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblDataCheck" min="-2" pref="125" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="btnServerStop" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -322,23 +357,37 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblServerIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtServerIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtServerPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblServerIpAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblServerActualIp" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblServerOutput" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnClearServerOutput" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="397" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="serverProgressBar" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="lblDataCheck" alignment="2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnServerStop" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="511" pref="511" max="511" attributes="0"/>
+                          <Component id="btnServerStart" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="lblServerOutput" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="397" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnServerStart" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnServerStop" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace pref="38" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -356,12 +405,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblServerIpAddress">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Current IP Address:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtServerIpAddress">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="External IP Address:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -374,6 +418,7 @@
             <Component class="javax.swing.JTextArea" name="txtServerOutput">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Courier New" size="12" style="0"/>
                 </Property>
@@ -399,6 +444,29 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop Listening"/>
             <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServerStopActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="serverProgressBar">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnClearServerOutput">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Clear"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearServerOutputActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblDataCheck">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="*Waiting to Start..."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblServerActualIp">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="127.0.0.1"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -2,10 +2,14 @@ package russell_cmis440_lab2;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 import javax.swing.JOptionPane; //For Exception Handling
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JTextArea;
+import javax.swing.JLabel;
 
 /**
 * Program Name:
@@ -34,8 +38,8 @@ public class DfcServer extends SwingWorker<Void, Void> {
     ExecutorService myApplication = null;
     UdpServer myUdpServer = null;
 
-    public DfcServer(int aServerPort, JTextArea aJTextArea){
-        myUdpServer = new UdpServer(aServerPort, aJTextArea);
+    public DfcServer(int aServerPort, JTextArea aJTextArea, JLabel aDataCheckLabel){
+        myUdpServer = new UdpServer(aServerPort, aJTextArea, aDataCheckLabel);
         myApplication = Executors.newCachedThreadPool();
     }
 
@@ -69,6 +73,7 @@ public class DfcServer extends SwingWorker<Void, Void> {
             throw new RuntimeException(ex.getCause());
         }
     }
+
 
 
 }

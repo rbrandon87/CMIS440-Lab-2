@@ -45,13 +45,27 @@ public class Buffer {
         FileStats tempFileStatsHolder = null;
         try{
             tempFileStatsHolder = (FileStats) mySharedBuffer.take();
+            return tempFileStatsHolder;
         }catch (InterruptedException exception){
+            return null;
 
         }finally{
-            return tempFileStatsHolder;
+            
         }
 
 
+    }
+
+    public int getBufferSize(){
+        try{
+            return (mySharedBuffer.size() - mySharedBuffer.remainingCapacity());
+        }catch (Exception exception){
+            return 0;
+
+        }finally{
+
+        }
+        
     }
 
 }

@@ -62,7 +62,7 @@ public class FileStatsProcessor implements Runnable{
             myDatagramSocket.send(mySendNumOfFilesPacket);
 
             for(numOfFilesSent = 0; numOfFilesSent < numOfFilesToProcessInteger; numOfFilesSent++){
-                tempLineHolder = "\nFile " + Integer.toString(numOfFilesSent) + ")" + mySharedBuffer.get().toString();
+                tempLineHolder = "\n\nFile " + Integer.toString(numOfFilesSent) + ")" + mySharedBuffer.get().toString() + "\n\n";
                 byte[] myDataToSend = tempLineHolder.getBytes();
                 DatagramPacket mySendPacket = new DatagramPacket(myDataToSend, myDataToSend.length, InetAddress.getByName(myServerIpAddress), myServerPort);
                 myDatagramSocket.send(mySendPacket);

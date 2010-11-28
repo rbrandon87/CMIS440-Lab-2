@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.net.InetAddress;
+import java.util.concurrent.CancellationException;
 
 /** What is this?*
 *|----------------------------------------------------------------------------|
@@ -64,12 +66,15 @@ public class LabMainWindow extends javax.swing.JFrame
         lblServerPort = new javax.swing.JLabel();
         txtServerPort = new javax.swing.JTextField();
         lblServerIpAddress = new javax.swing.JLabel();
-        txtServerIpAddress = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtServerOutput = new javax.swing.JTextArea();
         lblServerOutput = new javax.swing.JLabel();
         btnServerStart = new javax.swing.JButton();
         btnServerStop = new javax.swing.JButton();
+        serverProgressBar = new javax.swing.JProgressBar();
+        btnClearServerOutput = new javax.swing.JButton();
+        lblDataCheck = new javax.swing.JLabel();
+        lblServerActualIp = new javax.swing.JLabel();
         myMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         startClientMenuItem = new javax.swing.JMenuItem();
@@ -113,6 +118,11 @@ public class LabMainWindow extends javax.swing.JFrame
 
         btnClientCancel.setText("Cancel");
         btnClientCancel.setEnabled(false);
+        btnClientCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientCancelActionPerformed(evt);
+            }
+        });
 
         clientProgressBar.setStringPainted(true);
 
@@ -187,12 +197,11 @@ public class LabMainWindow extends javax.swing.JFrame
 
         txtServerPort.setText("5000");
 
-        lblServerIpAddress.setText("Current IP Address:");
-
-        txtServerIpAddress.setEditable(false);
+        lblServerIpAddress.setText("External IP Address:");
 
         txtServerOutput.setColumns(20);
-        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txtServerOutput.setEditable(false);
+        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12));
         txtServerOutput.setRows(5);
         jScrollPane1.setViewportView(txtServerOutput);
 
@@ -207,6 +216,22 @@ public class LabMainWindow extends javax.swing.JFrame
 
         btnServerStop.setText("Stop Listening");
         btnServerStop.setEnabled(false);
+        btnServerStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnServerStopActionPerformed(evt);
+            }
+        });
+
+        btnClearServerOutput.setText("Clear");
+        btnClearServerOutput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearServerOutputActionPerformed(evt);
+            }
+        });
+
+        lblDataCheck.setText("*Waiting to Start...");
+
+        lblServerActualIp.setText("127.0.0.1");
 
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
         serverPanel.setLayout(serverPanelLayout);
@@ -222,55 +247,98 @@ public class LabMainWindow extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblServerIpAddress)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtServerIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblServerActualIp, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
-                    .addComponent(lblServerOutput)
-                    .addComponent(btnServerStart)
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(lblServerOutput)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClearServerOutput))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(btnServerStart)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDataCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnServerStop))
                 .addContainerGap())
         );
         serverPanelLayout.setVerticalGroup(
             serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblServerPort)
-                    .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblServerIpAddress)
-                    .addComponent(txtServerIpAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(lblServerOutput)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnServerStart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnServerStop)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblServerPort)
+                            .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblServerIpAddress)
+                            .addComponent(lblServerActualIp))
+                        .addGap(38, 38, 38)
+                        .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblServerOutput)
+                            .addComponent(btnClearServerOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(serverProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDataCheck))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnServerStop))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addGap(511, 511, 511)
+                        .addComponent(btnServerStart)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         fileMenu.setText("File");
 
         startClientMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         startClientMenuItem.setText("Start Client");
+        startClientMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startClientMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(startClientMenuItem);
 
         startServerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         startServerMenuItem.setText("Start Server");
+        startServerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startServerMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(startServerMenuItem);
 
         stopClientMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         stopClientMenuItem.setText("Stop Client");
         stopClientMenuItem.setEnabled(false);
+        stopClientMenuItem.setEnabled(false);
+        stopClientMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopClientMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(stopClientMenuItem);
 
         stopServerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         stopServerMenuItem.setText("Stop Server");
         stopServerMenuItem.setEnabled(false);
+        stopServerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopServerMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(stopServerMenuItem);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exitMenuItem);
 
         myMenuBar.add(fileMenu);
@@ -279,6 +347,11 @@ public class LabMainWindow extends javax.swing.JFrame
 
         copyOutputMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copyOutputMenuItem.setText("Copy Output");
+        copyOutputMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyOutputMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(copyOutputMenuItem);
 
         myMenuBar.add(editMenu);
@@ -287,6 +360,11 @@ public class LabMainWindow extends javax.swing.JFrame
 
         instructionsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         instructionsMenuItem.setText("Instructions");
+        instructionsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instructionsMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(instructionsMenuItem);
 
         myMenuBar.add(helpMenu);
@@ -323,6 +401,64 @@ public class LabMainWindow extends javax.swing.JFrame
         startServerListening();
     }//GEN-LAST:event_btnServerStartActionPerformed
 
+    private void copyOutputMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyOutputMenuItemActionPerformed
+        try{
+            Clipboard system = Toolkit.getDefaultToolkit().getSystemClipboard();
+            StringSelection txtOutputSel =
+                    new StringSelection(txtServerOutput.getSelectedText());
+            system.setContents(txtOutputSel, txtOutputSel);
+
+        }catch(Exception exception){
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on copy action",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_copyOutputMenuItemActionPerformed
+
+    private void btnServerStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServerStopActionPerformed
+        stopServerListening();
+    }//GEN-LAST:event_btnServerStopActionPerformed
+
+    private void btnClearServerOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearServerOutputActionPerformed
+        txtServerOutput.setText("");
+    }//GEN-LAST:event_btnClearServerOutputActionPerformed
+
+    private void startServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerMenuItemActionPerformed
+        startServerListening();
+    }//GEN-LAST:event_startServerMenuItemActionPerformed
+
+    private void startClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startClientMenuItemActionPerformed
+        startProcessingFiles();
+    }//GEN-LAST:event_startClientMenuItemActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void instructionsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructionsMenuItemActionPerformed
+    String instructionMessage = "1) Select one or more files, or an "
+        + "entire directory, from the file chooser below.\n"
+        + "2) Select options from the option panel below.\n"
+        + "3) Select Start from Menu or click the Start button.\n"
+        + "4) Output sent to Output Text Area and output.txt in application"
+        + " directory.";
+
+    JOptionPane.showMessageDialog(null, instructionMessage,
+        "Instructions", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_instructionsMenuItemActionPerformed
+
+    private void stopClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopClientMenuItemActionPerformed
+        stopProcessingFiles();
+    }//GEN-LAST:event_stopClientMenuItemActionPerformed
+
+    private void btnClientCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientCancelActionPerformed
+        stopProcessingFiles();
+    }//GEN-LAST:event_btnClientCancelActionPerformed
+
+    private void stopServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerMenuItemActionPerformed
+        stopServerListening();
+    }//GEN-LAST:event_stopServerMenuItemActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -353,7 +489,6 @@ public class LabMainWindow extends javax.swing.JFrame
     */
     private void startProcessingFiles(){
         try{
-            txtServerOutput.setText("");
             String tempIpAddressHolder = txtClientIpAddress.getText();
             int tempPortHolder = Integer.parseInt(txtClientPort.getText());
             setClientControlsToWait();
@@ -368,7 +503,7 @@ public class LabMainWindow extends javax.swing.JFrame
                 selectedFileNames[counter] = element.toString();
                 counter++;
             }
-            DfcClient myDfcClient = new DfcClient(selectedFileNames, tempIpAddressHolder, tempPortHolder);
+            myDfcClient = new DfcClient(selectedFileNames, tempIpAddressHolder, tempPortHolder);
             myDfcClient.addPropertyChangeListener(this);
             myDfcClient.execute(); //Begin Worker Thread
 
@@ -385,12 +520,38 @@ public class LabMainWindow extends javax.swing.JFrame
         }
     }
 
+    private void stopProcessingFiles(){
+        try{
+            if (myDfcClient != null){
+                myDfcClient.myApplication.shutdownNow();
+                myDfcClient.cancel(true);
+
+            }
+
+        }catch (CancellationException exception){
+            JOptionPane.showMessageDialog(null,"Job Cancelled",
+                    "Job Cancelled",
+                    JOptionPane.ERROR_MESSAGE);
+        }catch (Exception exception){
+            JOptionPane.showMessageDialog(null,exception,
+                    "Exception Thrown on Start Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }finally{
+            setClientControlsToActive();
+            clientProgressBar.setValue(0);
+        }
+    }
+
     private void startServerListening(){
         try{
+
+            InetAddress myNetworkIp = InetAddress.getLocalHost();
+            lblServerActualIp.setText(myNetworkIp.getHostAddress());
+            ServerRun = true;
             setServerControlsToWait();
-            txtServerOutput.setText("Waiting for Data...\n");
+            
             int tempPortHolder = Integer.parseInt(txtServerPort.getText());
-            DfcServer myDfcServer = new DfcServer(tempPortHolder, txtServerOutput);
+            myDfcServer = new DfcServer(tempPortHolder, txtServerOutput, lblDataCheck);
             myDfcServer.addPropertyChangeListener(this);
             myDfcServer.execute(); //Begin Worker Thread
         }catch (NumberFormatException exception){
@@ -403,8 +564,26 @@ public class LabMainWindow extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null,exception.getMessage(),
                     "Exception Thrown on Start Process",
                     JOptionPane.ERROR_MESSAGE);
+        }finally{
+            
         }
         
+    }
+
+    private void stopServerListening(){
+        try{
+            ServerRun = false;
+            if (myDfcServer != null){
+                myDfcServer.myUdpServer.stopIncomingConnections();
+            }
+
+        }catch (Exception exception){
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on Server Stop Process",
+                    JOptionPane.ERROR_MESSAGE);
+        }finally{
+            setServerControlsToActive();
+        }
     }
 
     /** Detects progress of file processing from ThreadControl object.
@@ -447,6 +626,7 @@ public class LabMainWindow extends javax.swing.JFrame
     *               continues to use proper casing and indentation.
     */
     public void setClientControlsToWait(){
+        clientProgressBar.setValue(0);
         btnClientStart.setEnabled(false);
         startClientMenuItem.setEnabled(false);
         btnClientCancel.setEnabled(true);
@@ -485,6 +665,9 @@ public class LabMainWindow extends javax.swing.JFrame
     *               continues to use proper casing and indentation.
     */
     public void setServerControlsToWait(){
+       
+        lblDataCheck.setText("*Waiting for Data...");
+        serverProgressBar.setIndeterminate(true);
         btnServerStart.setEnabled(false);
         startServerMenuItem.setEnabled(false);
         btnServerStop.setEnabled(true);
@@ -503,19 +686,26 @@ public class LabMainWindow extends javax.swing.JFrame
     *               continues to use proper casing and indentation.
     */
     public void setServerControlsToActive(){
+        
+        lblDataCheck.setText("*Waiting to start...");
+        serverProgressBar.setIndeterminate(false);
         btnServerStart.setEnabled(true);
         startServerMenuItem.setEnabled(true);
         btnServerStop.setEnabled(false);
         stopServerMenuItem.setEnabled(false);
         Toolkit.getDefaultToolkit().beep();
     }
+
+    public static boolean ServerRun = true;
+    DfcServer myDfcServer = null;
+    DfcClient myDfcClient = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClearServerOutput;
     private javax.swing.JButton btnClientCancel;
     private javax.swing.JButton btnClientStart;
     private javax.swing.JButton btnServerStart;
     private javax.swing.JButton btnServerStop;
     private javax.swing.JPanel clientPanel;
-    private javax.swing.JPanel clientPanel1;
     private javax.swing.JProgressBar clientProgressBar;
     private javax.swing.JMenuItem copyOutputMenuItem;
     private javax.swing.JMenu editMenu;
@@ -528,19 +718,21 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JLabel lblClientIpAddress;
     private javax.swing.JLabel lblClientPort;
     private javax.swing.JLabel lblConnectTo;
+    private javax.swing.JLabel lblDataCheck;
+    private javax.swing.JLabel lblServerActualIp;
     private javax.swing.JLabel lblServerIpAddress;
     private javax.swing.JLabel lblServerOutput;
     private javax.swing.JLabel lblServerPort;
     private javax.swing.JFileChooser myFileChooser;
     private javax.swing.JMenuBar myMenuBar;
     private javax.swing.JPanel serverPanel;
+    private javax.swing.JProgressBar serverProgressBar;
     private javax.swing.JMenuItem startClientMenuItem;
     private javax.swing.JMenuItem startServerMenuItem;
     private javax.swing.JMenuItem stopClientMenuItem;
     private javax.swing.JMenuItem stopServerMenuItem;
     private javax.swing.JTextField txtClientIpAddress;
     private javax.swing.JTextField txtClientPort;
-    private javax.swing.JTextField txtServerIpAddress;
     private javax.swing.JTextArea txtServerOutput;
     private javax.swing.JTextField txtServerPort;
     // End of variables declaration//GEN-END:variables

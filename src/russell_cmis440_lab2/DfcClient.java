@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane; //For Exception Handling
 /**
 * Program Name: CMIS440 Lab 1 Word Counter
@@ -171,14 +172,18 @@ public class DfcClient extends SwingWorker<Void, Void>{
             int progress = 0;
             setProgress(0); //Updates progress bar on main window
 
-            wordCounterThreads = new Thread[myFileNames.length];
-            for(int i=0; i< myFileNames.length; i++){
-                myApplication.execute( new FileProcessor(myFileNames[i], mySharedBuffer));
+            for(progress=0; progress< myFileNames.length; progress++){
+                myApplication.execute( new FileProcessor(myFileNames[progress], mySharedBuffer));
+                setProgress(Math.min(progress, 90));
             }
                 myApplication.execute(myFileStatsProcessor);
 
+                //myApplication.awaitTermination(5, TimeUnit.SECONDS);
+                while (mySharedBuffer.getBufferSize() >= 0){
+                    //Wait
+                }
+                setProgress(94);
                 myApplication.shutdown();
-
 
         }catch(Exception exception){
             JOptionPane.showMessageDialog(null,"Unknown Exception on thread run"

@@ -134,7 +134,7 @@ public class FileStats {
         int numberOfWords = 0;
         String format = "|%1$-"+ maxLength +"s | %2$"+ maxLength +"s|\n";
 
-        formattedLine = "FileName: " + this.getFileName().substring(
+        formattedLine = "\n\nFileName: " + this.getFileName().substring(
                 this.getFileName().lastIndexOf("\\") + 1) + " contains:";
         myFormattedResults.append(formattedLine);
         myFormattedResults.append("\n-----------------------------------\n");
