@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane; //For Exception Handling
-
+import java.util.Random;
 
 /**
 * Program Name:
@@ -39,14 +39,26 @@ public class UdpServer implements Runnable {
     private DatagramSocket myListenSocket;
     private JTextArea updateOutputTextArea = null;
     private JLabel updateOutputLabel = null;
+    private JLabel updateTotalBytesReceivedLabel = null;
+    private JLabel updateBytesReceivedLabel = null;
+    private int bytesReceived = 0;
+    private int totalBytesReceived = 0;
+    private final Random generator = new Random();
 
-    public UdpServer(int aServerPort, JTextArea aJTextArea, JLabel aDataCheckLabel){
+    public UdpServer(int aServerPort, JTextArea aJTextArea, JLabel aDataCheckLabel, JLabel aBytesReceivedLabel, JLabel aTotalBytesReceivedLabel){
         try{
             myListenSocket = new DatagramSocket(aServerPort);
             updateOutputTextArea = aJTextArea;
             updateOutputLabel = aDataCheckLabel;
             updateOutputTextArea.setText("");
             updateOutputLabel.setText("*Waiting for Data...");
+
+            updateBytesReceivedLabel = aBytesReceivedLabel;
+            updateBytesReceivedLabel.setText("0");
+
+            updateTotalBytesReceivedLabel = aTotalBytesReceivedLabel;
+            updateTotalBytesReceivedLabel.setText("0");
+
         }catch (SocketException exception){
 
         }
@@ -59,21 +71,29 @@ public class UdpServer implements Runnable {
                 byte[] myIncomingData = new byte[65507];
                 tempLineHolder = "";
                 DatagramPacket myReceivePacket = new DatagramPacket(myIncomingData, myIncomingData.length);
-                myListenSocket.setSoTimeout(2000);
+                myListenSocket.setSoTimeout(Math.min(500,generator.nextInt(2000)));
                 myListenSocket.receive(myReceivePacket);
+
+                bytesReceived += myReceivePacket.getLength();
+                totalBytesReceived += myReceivePacket.getLength();
+                updateTotalBytesReceivedLabel.setText(String.valueOf(totalBytesReceived));
                 updateOutputLabel.setText("*Receiving Data...");
                 myReceivePacket.setLength(myReceivePacket.getLength());
                 tempLineHolder = new String(myReceivePacket.getData()).trim();
                 updateOutputTextArea.append(tempLineHolder);
 
             }catch (SocketTimeoutException exception) {
+                if (bytesReceived != 0){
+                    updateBytesReceivedLabel.setText(String.valueOf(bytesReceived));
+                    bytesReceived = 0;
+                }
                 updateOutputLabel.setText("*Waiting for Data...");
             }catch (SocketException exception) {
                 System.out.println(exception);
             } catch (IOException exception) {
                 System.out.println(exception);
             }catch (NullPointerException exception) {
-                System.out.println(exception);
+                System.out.println(exception); //If program runs twice on same port
             }catch (Exception exception) {
                 System.out.println(exception);
             }

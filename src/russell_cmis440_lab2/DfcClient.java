@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane; //For Exception Handling
+import javax.swing.JLabel;
 /**
 * Program Name: CMIS440 Lab 1 Word Counter
 * @author Brandon R Russell
@@ -46,7 +47,7 @@ import javax.swing.JOptionPane; //For Exception Handling
 *               the same basic rules.
 */
 
-public class DfcClient extends SwingWorker<Void, Void>{
+public class DfcClient extends SwingWorker<Integer, Integer>{
 
     ArrayList<FileProcessor> fileProcessors;//hold WordCounter objs.
     Buffer mySharedBuffer;//Shared TotalResults object.
@@ -72,7 +73,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
     * @param aCaseCheck will give user specified case sensitive check
     * @exception exception if none or other than text files are given.
     */
-    public DfcClient(String[] fileArguments, String aServerIpAddress, int aServerPort) throws Exception{
+    public DfcClient(String[] fileArguments, String aServerIpAddress, int aServerPort, JLabel alblClientBytesSent) throws Exception{
         try{
 
             aFilter = new FilenameFilter(){
@@ -110,7 +111,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
             }
             fileProcessors = new ArrayList<FileProcessor>();
             mySharedBuffer = new Buffer();
-            myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, aServerPort, mySharedBuffer, getNumOfFiles());
+            myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, aServerPort, mySharedBuffer, getNumOfFiles(), alblClientBytesSent);
             myApplication = Executors.newCachedThreadPool();
         }catch(Exception exception){
             throw new Exception(exception);
@@ -167,7 +168,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
     * @exception Exception general capture
     */
     @Override
-    public Void doInBackground() throws Exception{
+    public Integer doInBackground() throws Exception{
         try{
             int progress = 0;
             setProgress(0); //Updates progress bar on main window
@@ -180,7 +181,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
 
                 //myApplication.awaitTermination(5, TimeUnit.SECONDS);
                 while (mySharedBuffer.getBufferSize() >= 0){
-                    //Wait
+                    //wait
                 }
                 setProgress(94);
                 myApplication.shutdown();
@@ -237,6 +238,5 @@ public class DfcClient extends SwingWorker<Void, Void>{
     private String getNumOfFiles(){
         return Integer.toString(myNumOfFiles);
     }
-
 
 }

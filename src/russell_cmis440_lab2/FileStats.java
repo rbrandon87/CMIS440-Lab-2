@@ -134,7 +134,7 @@ public class FileStats {
         int numberOfWords = 0;
         String format = "|%1$-"+ maxLength +"s | %2$"+ maxLength +"s|\n";
 
-        formattedLine = "\n\nFileName: " + this.getFileName().substring(
+        formattedLine = "FileName: " + this.getFileName().substring(
                 this.getFileName().lastIndexOf("\\") + 1) + " contains:";
         myFormattedResults.append(formattedLine);
         myFormattedResults.append("\n-----------------------------------\n");
@@ -155,8 +155,9 @@ public class FileStats {
         }
 
         myFormattedResults.append("-----------------------------------\n");
-        formattedLine = "Total number of unique words found: " + keys.size() +
-                "\n" + "Total number of words found: " + numberOfWords + "\n\n";
+        formattedLine = "Total number of unique words found : " + keys.size() +
+                " :\n" + "Total number of words found : " + numberOfWords
+                + " :\n\n";
         myFormattedResults.append(formattedLine);
 
         return myFormattedResults.toString();

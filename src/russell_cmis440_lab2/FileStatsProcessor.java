@@ -8,7 +8,8 @@ import java.net.UnknownHostException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.Random;
+import javax.swing.JLabel;
 
 /**
 * Program Name:
@@ -42,14 +43,21 @@ public class FileStatsProcessor implements Runnable{
     private int numOfFilesToProcessInteger = 0;
     private int numOfFilesSent = 0;
     private String tempLineHolder = "";
-    public FileStatsProcessor(String aServerIpAddress, int aServerPort, Buffer aSharedBuffer, String aNumOfFilesToProcess ){
+    private final Random generator = new Random();
+    private int numOfBytesSent = 0;
+    private JLabel updateClientBytesSentLabel = null;
+    
+    public FileStatsProcessor(String aServerIpAddress, int aServerPort, Buffer aSharedBuffer, String aNumOfFilesToProcess , JLabel alblClientBytesSentLabel){
         try {
             myServerIpAddress = aServerIpAddress;
             myServerPort = aServerPort;
             mySharedBuffer = aSharedBuffer;
             myDatagramSocket = new DatagramSocket();
-            numOfFilesToProcess = "Total number of files:" + aNumOfFilesToProcess + "\n\n";
+            numOfFilesToProcess = "Total number of files : " + aNumOfFilesToProcess + " :\n\n: ";
             numOfFilesToProcessInteger = Integer.parseInt(aNumOfFilesToProcess);
+            updateClientBytesSentLabel = alblClientBytesSentLabel;
+            updateClientBytesSentLabel.setText("0");
+            
         } catch (NumberFormatException exception) {
         } catch (SocketException exception) {
         }
@@ -57,19 +65,22 @@ public class FileStatsProcessor implements Runnable{
 
     public void run(){
         try{
-            byte[] myNumOfFilesDataToSend =numOfFilesToProcess.getBytes();
-            DatagramPacket mySendNumOfFilesPacket = new DatagramPacket(myNumOfFilesDataToSend, numOfFilesToProcess.length(), InetAddress.getByName(myServerIpAddress), myServerPort);
+            byte[] myNumOfFilesDataToSend =numOfFilesToProcess.toString().getBytes();
+            DatagramPacket mySendNumOfFilesPacket = new DatagramPacket(myNumOfFilesDataToSend, myNumOfFilesDataToSend.length, InetAddress.getByName(myServerIpAddress), myServerPort);
             myDatagramSocket.send(mySendNumOfFilesPacket);
-
+            numOfBytesSent = mySendNumOfFilesPacket.getLength();
             for(numOfFilesSent = 0; numOfFilesSent < numOfFilesToProcessInteger; numOfFilesSent++){
-                tempLineHolder = "\n\nFile " + Integer.toString(numOfFilesSent) + ")" + mySharedBuffer.get().toString() + "\n\n";
+                tempLineHolder = ":\n\n File " + Integer.toString(numOfFilesSent) + ") " + mySharedBuffer.get().toString();
                 byte[] myDataToSend = tempLineHolder.getBytes();
                 DatagramPacket mySendPacket = new DatagramPacket(myDataToSend, myDataToSend.length, InetAddress.getByName(myServerIpAddress), myServerPort);
                 myDatagramSocket.send(mySendPacket);
-                Thread.sleep(5);
+            numOfBytesSent += mySendPacket.getLength();
+                Thread.sleep(generator.nextInt(5));
                 //System.out.println("File: " + numOfFilesSent + " sent.");
                 //numOfFilesSent++;
             }
+
+            updateClientBytesSentLabel.setText(String.valueOf(numOfBytesSent));
 
         }catch (InterruptedException exception){
 
@@ -81,5 +92,6 @@ public class FileStatsProcessor implements Runnable{
 
 
     }
+
 
 }

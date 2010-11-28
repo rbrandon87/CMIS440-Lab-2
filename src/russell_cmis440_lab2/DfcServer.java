@@ -38,8 +38,8 @@ public class DfcServer extends SwingWorker<Void, Void> {
     ExecutorService myApplication = null;
     UdpServer myUdpServer = null;
 
-    public DfcServer(int aServerPort, JTextArea aJTextArea, JLabel aDataCheckLabel){
-        myUdpServer = new UdpServer(aServerPort, aJTextArea, aDataCheckLabel);
+    public DfcServer(int aServerPort, JTextArea aJTextArea, JLabel aDataCheckLabel, JLabel aBytesReceivedLabel, JLabel aTotalBytesReceivedLabel){
+        myUdpServer = new UdpServer(aServerPort, aJTextArea, aDataCheckLabel, aBytesReceivedLabel, aTotalBytesReceivedLabel);
         myApplication = Executors.newCachedThreadPool();
     }
 
