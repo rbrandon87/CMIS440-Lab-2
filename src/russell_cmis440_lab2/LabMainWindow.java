@@ -91,7 +91,8 @@ public class LabMainWindow extends javax.swing.JFrame
         editMenu = new javax.swing.JMenu();
         copyOutputMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        instructionsMenuItem = new javax.swing.JMenuItem();
+        clientInstructionsMenuItem = new javax.swing.JMenuItem();
+        serverInstructionsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(javax.swing.UIManager.getDefaults().getColor("Nb.Desktop.background"));
@@ -171,14 +172,13 @@ public class LabMainWindow extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClientCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clientProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(clientProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(clientPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbClientBytesLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblClientBytesSent, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(clientPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbClientBytesLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblClientBytesSent, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(368, Short.MAX_VALUE))
         );
         clientPanelLayout.setVerticalGroup(
             clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +220,7 @@ public class LabMainWindow extends javax.swing.JFrame
 
         txtServerOutput.setColumns(20);
         txtServerOutput.setEditable(false);
-        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12));
         txtServerOutput.setRows(5);
         jScrollPane1.setViewportView(txtServerOutput);
 
@@ -400,14 +400,23 @@ public class LabMainWindow extends javax.swing.JFrame
 
         helpMenu.setText("Help");
 
-        instructionsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        instructionsMenuItem.setText("Instructions");
-        instructionsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        clientInstructionsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        clientInstructionsMenuItem.setText("Client Instructions");
+        clientInstructionsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                instructionsMenuItemActionPerformed(evt);
+                clientInstructionsMenuItemActionPerformed(evt);
             }
         });
-        helpMenu.add(instructionsMenuItem);
+        helpMenu.add(clientInstructionsMenuItem);
+
+        serverInstructionsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        serverInstructionsMenuItem.setText("Server Instructions");
+        serverInstructionsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverInstructionsMenuItemActionPerformed(evt);
+            }
+        });
+        helpMenu.add(serverInstructionsMenuItem);
 
         myMenuBar.add(helpMenu);
 
@@ -477,13 +486,13 @@ public class LabMainWindow extends javax.swing.JFrame
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void instructionsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructionsMenuItemActionPerformed
-    String instructionMessage = ""
-            + "1) ";
+    private void clientInstructionsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientInstructionsMenuItemActionPerformed
+        String instructionMessage = ""
+                + "1) ";
 
-    JOptionPane.showMessageDialog(null, instructionMessage,
-        "Instructions", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_instructionsMenuItemActionPerformed
+        JOptionPane.showMessageDialog(null, instructionMessage,
+            "Client Instructions", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_clientInstructionsMenuItemActionPerformed
 
     private void stopClientMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopClientMenuItemActionPerformed
         stopProcessingFiles();
@@ -496,6 +505,14 @@ public class LabMainWindow extends javax.swing.JFrame
     private void stopServerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerMenuItemActionPerformed
         stopServerListening();
     }//GEN-LAST:event_stopServerMenuItemActionPerformed
+
+    private void serverInstructionsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverInstructionsMenuItemActionPerformed
+        String instructionMessage = ""
+                + "1) ";
+
+        JOptionPane.showMessageDialog(null, instructionMessage,
+            "Server Instructions", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_serverInstructionsMenuItemActionPerformed
 
     /**
     * @param args the command line arguments
@@ -747,6 +764,7 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JButton btnClientStart;
     private javax.swing.JButton btnServerStart;
     private javax.swing.JButton btnServerStop;
+    private javax.swing.JMenuItem clientInstructionsMenuItem;
     private javax.swing.JPanel clientPanel;
     private javax.swing.JProgressBar clientProgressBar;
     private javax.swing.JMenuItem copyOutputMenuItem;
@@ -754,7 +772,6 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JMenuItem instructionsMenuItem;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbClientBytesLabel;
     private javax.swing.JLabel lblChooseFiles;
@@ -773,6 +790,7 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JLabel lblTotalServerBytesReceived;
     private javax.swing.JFileChooser myFileChooser;
     private javax.swing.JMenuBar myMenuBar;
+    private javax.swing.JMenuItem serverInstructionsMenuItem;
     private javax.swing.JPanel serverPanel;
     private javax.swing.JProgressBar serverProgressBar;
     private javax.swing.JMenuItem startClientMenuItem;

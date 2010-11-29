@@ -71,10 +71,11 @@ public class UdpServer implements Runnable {
                 byte[] myIncomingData = new byte[65507];
                 tempLineHolder = "";
                 DatagramPacket myReceivePacket = new DatagramPacket(myIncomingData, myIncomingData.length);
-                myListenSocket.setSoTimeout(Math.min(500,generator.nextInt(2000)));
+                myListenSocket.setSoTimeout(Math.min(500,generator.nextInt(1000)));
                 myListenSocket.receive(myReceivePacket);
 
                 bytesReceived += myReceivePacket.getLength();
+                updateBytesReceivedLabel.setText(String.valueOf(bytesReceived));
                 totalBytesReceived += myReceivePacket.getLength();
                 updateTotalBytesReceivedLabel.setText(String.valueOf(totalBytesReceived));
                 updateOutputLabel.setText("*Receiving Data...");
@@ -84,7 +85,7 @@ public class UdpServer implements Runnable {
 
             }catch (SocketTimeoutException exception) {
                 if (bytesReceived != 0){
-                    updateBytesReceivedLabel.setText(String.valueOf(bytesReceived));
+                    
                     bytesReceived = 0;
                 }
                 updateOutputLabel.setText("*Waiting for Data...");

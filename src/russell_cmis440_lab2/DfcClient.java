@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane; //For Exception Handling
 import javax.swing.JLabel;
+
 /**
 * Program Name: CMIS440 Lab 1 Word Counter
 * @author Brandon R Russell
@@ -47,7 +48,7 @@ import javax.swing.JLabel;
 *               the same basic rules.
 */
 
-public class DfcClient extends SwingWorker<Integer, Integer>{
+public class DfcClient extends SwingWorker<Void, Void>{
 
     ArrayList<FileProcessor> fileProcessors;//hold WordCounter objs.
     Buffer mySharedBuffer;//Shared TotalResults object.
@@ -59,6 +60,7 @@ public class DfcClient extends SwingWorker<Integer, Integer>{
     String myIndividualFileResults = "";
     int myNumOfFiles = 0; //Number of files being processed.
     ExecutorService myApplication = null;
+
 
     /** Constructor initializes variables and creates array of filenames.
     * @TheCs Cohesion - initializes variables/creates array of filenames.
@@ -109,6 +111,7 @@ public class DfcClient extends SwingWorker<Integer, Integer>{
             if (myFileNames.length <= 0){
                 throw new Exception("Must Specify atleast one text file.");
             }
+
             fileProcessors = new ArrayList<FileProcessor>();
             mySharedBuffer = new Buffer();
             myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, aServerPort, mySharedBuffer, getNumOfFiles(), alblClientBytesSent);
@@ -168,7 +171,7 @@ public class DfcClient extends SwingWorker<Integer, Integer>{
     * @exception Exception general capture
     */
     @Override
-    public Integer doInBackground() throws Exception{
+    public Void doInBackground() throws Exception{
         try{
             int progress = 0;
             setProgress(0); //Updates progress bar on main window

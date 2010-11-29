@@ -9,7 +9,6 @@ import javax.swing.JOptionPane; //For Exception Handling
 import java.util.regex.*;
 
 
-
 /**
 * Program Name: CMIS440 Lab 1 Word Counter
 * @author Brandon R Russell
@@ -95,6 +94,7 @@ public class FileProcessor implements Runnable{
             while (matcher.find()){
                 if (matcher.group(1).length() != 0){
                     myFileStats.addWordToMap(matcher.group(1).length());
+                    
                 }
 
             }

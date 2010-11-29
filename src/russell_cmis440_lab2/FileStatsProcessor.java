@@ -75,12 +75,13 @@ public class FileStatsProcessor implements Runnable{
                 DatagramPacket mySendPacket = new DatagramPacket(myDataToSend, myDataToSend.length, InetAddress.getByName(myServerIpAddress), myServerPort);
                 myDatagramSocket.send(mySendPacket);
             numOfBytesSent += mySendPacket.getLength();
+            updateClientBytesSentLabel.setText(String.valueOf(numOfBytesSent));
                 Thread.sleep(generator.nextInt(5));
                 //System.out.println("File: " + numOfFilesSent + " sent.");
                 //numOfFilesSent++;
             }
 
-            updateClientBytesSentLabel.setText(String.valueOf(numOfBytesSent));
+            
 
         }catch (InterruptedException exception){
 
