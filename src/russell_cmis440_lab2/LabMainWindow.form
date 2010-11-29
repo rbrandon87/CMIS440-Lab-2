@@ -120,6 +120,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="CMIS440 Lab 2 Client/Server Word Length Counter"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="d6" green="df" id="Nb.Desktop.background" palette="3" red="e2" type="palette"/>
     </Property>

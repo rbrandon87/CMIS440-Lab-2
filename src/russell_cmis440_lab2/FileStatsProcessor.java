@@ -6,10 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Random;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
 * Program Name:

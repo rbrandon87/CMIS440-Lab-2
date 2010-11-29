@@ -4,8 +4,6 @@ package russell_cmis440_lab2;
 
 import java.util.ArrayList; //To create an ArrayList of WordCounter objects
 import java.io.File;//To retrieve the text files in the current directory.
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.FilenameFilter;//To filter out all files, but text files.
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -13,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane; //For Exception Handling
 import javax.swing.JLabel;
 
