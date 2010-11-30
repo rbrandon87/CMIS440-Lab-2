@@ -162,6 +162,9 @@ public class LabMainWindow extends javax.swing.JFrame
         lblTotalServerBytesReceived = new javax.swing.JLabel();
         lblServerBytesReceived = new javax.swing.JLabel();
         lblServerBytesLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtTotalOutput = new javax.swing.JTextArea();
+        lblTotalOutputTextArea = new javax.swing.JLabel();
         myMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         startClientMenuItem = new javax.swing.JMenuItem();
@@ -171,6 +174,7 @@ public class LabMainWindow extends javax.swing.JFrame
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         copyOutputMenuItem = new javax.swing.JMenuItem();
+        copyOutputTotalMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         clientInstructionsMenuItem = new javax.swing.JMenuItem();
         serverInstructionsMenuItem = new javax.swing.JMenuItem();
@@ -302,7 +306,7 @@ public class LabMainWindow extends javax.swing.JFrame
 
         txtServerOutput.setColumns(20);
         txtServerOutput.setEditable(false);
-        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12));
+        txtServerOutput.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         txtServerOutput.setRows(5);
         jScrollPane1.setViewportView(txtServerOutput);
 
@@ -342,6 +346,14 @@ public class LabMainWindow extends javax.swing.JFrame
 
         lblServerBytesLabel.setText("Bytes Received:");
 
+        txtTotalOutput.setColumns(20);
+        txtTotalOutput.setEditable(false);
+        txtTotalOutput.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txtTotalOutput.setRows(5);
+        jScrollPane2.setViewportView(txtTotalOutput);
+
+        lblTotalOutputTextArea.setText("Output Totals:");
+
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
         serverPanel.setLayout(serverPanelLayout);
         serverPanelLayout.setHorizontalGroup(
@@ -350,20 +362,27 @@ public class LabMainWindow extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(lblServerPort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblServerIpAddress)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblServerActualIp, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(186, Short.MAX_VALUE))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(lblServerOutput)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClearServerOutput)
+                        .addContainerGap(452, Short.MAX_VALUE))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
                         .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(serverPanelLayout.createSequentialGroup()
-                                .addComponent(lblServerPort)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblServerIpAddress)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblServerActualIp, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
-                            .addGroup(serverPanelLayout.createSequentialGroup()
-                                .addComponent(lblServerOutput)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnClearServerOutput))
                             .addComponent(btnServerStop)
                             .addGroup(serverPanelLayout.createSequentialGroup()
                                 .addComponent(btnServerStart)
@@ -371,8 +390,8 @@ public class LabMainWindow extends javax.swing.JFrame
                                 .addComponent(serverProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblDataCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverPanelLayout.createSequentialGroup()
+                        .addContainerGap(165, Short.MAX_VALUE))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
                         .addComponent(lblServerBytesLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblServerBytesReceived, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,35 +399,40 @@ public class LabMainWindow extends javax.swing.JFrame
                         .addComponent(lblTotalServerBytesLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTotalServerBytesReceived, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115))))
+                        .addGap(115, 115, 115))
+                    .addGroup(serverPanelLayout.createSequentialGroup()
+                        .addComponent(lblTotalOutputTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         serverPanelLayout.setVerticalGroup(
             serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblServerPort)
+                    .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblServerIpAddress)
+                    .addComponent(lblServerActualIp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblServerOutput)
+                    .addComponent(btnClearServerOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(lblTotalOutputTextArea)
+                .addGap(2, 2, 2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(serverPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblServerPort)
-                            .addComponent(txtServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblServerIpAddress)
-                            .addComponent(lblServerActualIp))
-                        .addGap(38, 38, 38)
-                        .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblServerOutput)
-                            .addComponent(btnClearServerOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(serverProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDataCheck))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnServerStop))
-                    .addGroup(serverPanelLayout.createSequentialGroup()
-                        .addGap(511, 511, 511)
-                        .addComponent(btnServerStart)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(btnServerStart))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotalServerBytesLabel)
                     .addComponent(lblTotalServerBytesReceived)
@@ -477,6 +501,15 @@ public class LabMainWindow extends javax.swing.JFrame
             }
         });
         editMenu.add(copyOutputMenuItem);
+
+        copyOutputTotalMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        copyOutputTotalMenuItem.setText("Copy Total Output");
+        copyOutputTotalMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyOutputTotalMenuItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(copyOutputTotalMenuItem);
 
         myMenuBar.add(editMenu);
 
@@ -601,17 +634,21 @@ public class LabMainWindow extends javax.swing.JFrame
         stopServerListening();
     }//GEN-LAST:event_btnServerStopActionPerformed
 
-    /** Clears the txtServerOutput TextArea of all data.
-    * @TheCs Cohesion - Clears the txtServerOutput TextArea of all data.
-    * Completeness - Completely clears the txtServerOutput TextArea of all data.
-    * Convenience - Simply clears the txtServerOutput TextArea of all data.
-    * Clarity - It is simple to understand that this clears the txtServerOutput
-    *           TextArea of all data.
+    /** Clears the txtServerOutput/txtTotalOutput TextAreas of all data.
+    * @TheCs Cohesion - Clears the txtServerOutput/txtTotalOutput TextAreas
+    *                   of all data.
+    * Completeness - Completely clears the txtServerOutput/txtTotalOutput
+    *                TextAreas of all data.
+    * Convenience - Simply clears the txtServerOutput/txtTotalOutput TextAreas
+    *               of all data.
+    * Clarity - It is simple to understand that this clears the 
+    *           txtServerOutput/txtTotalOutput TextAreas of all data.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */
     private void btnClearServerOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearServerOutputActionPerformed
         txtServerOutput.setText("");
+        txtTotalOutput.setText("");
     }//GEN-LAST:event_btnClearServerOutputActionPerformed
 
     /** Calls the startServerListening method;begin wait for data on the server
@@ -745,6 +782,34 @@ public class LabMainWindow extends javax.swing.JFrame
         JOptionPane.showMessageDialog(null, instructionMessage,
             "Server Instructions", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_serverInstructionsMenuItemActionPerformed
+
+    /** Allows user to copy the selected text from the txtOutput TextArea.
+    * @TheCs Cohesion - Allow user to copy the text from the txtOutput TextArea.
+    * Completeness - Completely lets one copy selected text from the txtOutput
+    *                TextArea.
+    * Convenience - Simply allows one to copy selected text from the txtOutput
+    *               TextArea
+    * Clarity - It is simple to understand that this allows one to copy selected
+    *           text from the txtOutput TextArea.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    private void copyOutputTotalMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyOutputTotalMenuItemActionPerformed
+        try{
+             /**This places selected text from the txtTotalOutput TextArea
+             * onto a newly created Clipboard object
+             */
+            Clipboard system = Toolkit.getDefaultToolkit().getSystemClipboard();
+            StringSelection txtOutputSel =
+                    new StringSelection(txtTotalOutput.getSelectedText());
+            system.setContents(txtOutputSel, txtOutputSel);
+
+        }catch(Exception exception){
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Exception Thrown on copy action",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_copyOutputTotalMenuItemActionPerformed
 
     /** Main method that starts the program by making the GUI visible.
     * @TheCs Cohesion - Starts the program by making the GUI visible.
@@ -908,11 +973,12 @@ public class LabMainWindow extends javax.swing.JFrame
             int tempPortHolder = Integer.parseInt(txtServerPort.getText());
             /**
              * Labels are passed with DfcServer object to update byte counters
-             * and label that tells if waiting or receiving data.
+             * and label that tells if waiting or receiving data. Also TextArea
+             * is sent as reference to update total counter.
              */
             myDfcServer = new DfcServer(tempPortHolder, txtServerOutput,
                     lblDataCheck, lblServerBytesReceived,
-                    lblTotalServerBytesReceived);
+                    lblTotalServerBytesReceived, txtTotalOutput);
             myDfcServer.addPropertyChangeListener(this);
             myDfcServer.execute(); //Begin Worker Thread
         }catch (NumberFormatException exception){
@@ -1092,11 +1158,13 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JPanel clientPanel;
     private javax.swing.JProgressBar clientProgressBar;
     private javax.swing.JMenuItem copyOutputMenuItem;
+    private javax.swing.JMenuItem copyOutputTotalMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbClientBytesLabel;
     private javax.swing.JLabel lblChooseFiles;
     private javax.swing.JLabel lblClientBytesSent;
@@ -1110,6 +1178,7 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JLabel lblServerIpAddress;
     private javax.swing.JLabel lblServerOutput;
     private javax.swing.JLabel lblServerPort;
+    private javax.swing.JLabel lblTotalOutputTextArea;
     private javax.swing.JLabel lblTotalServerBytesLabel;
     private javax.swing.JLabel lblTotalServerBytesReceived;
     private javax.swing.JFileChooser myFileChooser;
@@ -1125,6 +1194,7 @@ public class LabMainWindow extends javax.swing.JFrame
     private javax.swing.JTextField txtClientPort;
     private javax.swing.JTextArea txtServerOutput;
     private javax.swing.JTextField txtServerPort;
+    private javax.swing.JTextArea txtTotalOutput;
     // End of variables declaration//GEN-END:variables
 
 }
