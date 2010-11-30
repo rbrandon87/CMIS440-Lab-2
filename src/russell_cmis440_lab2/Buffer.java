@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 
 
 
-public class Buffer {
+public class Buffer implements IBuffer {
 
     private final ArrayBlockingQueue mySharedBuffer;
 
