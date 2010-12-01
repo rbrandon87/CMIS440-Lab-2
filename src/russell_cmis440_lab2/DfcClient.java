@@ -168,7 +168,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
     * @exception Exception general capture
     */
     @Override
-    public Void doInBackground() throws Exception{
+    public Void doInBackground(){
         try{
             int progress = 0;
             setProgress(0); //Updates progress bar on main window
@@ -185,7 +185,6 @@ public class DfcClient extends SwingWorker<Void, Void>{
                 }
                 setProgress(94);
                 myApplication.shutdown();
-
         }catch(Exception exception){
             JOptionPane.showMessageDialog(null,"Unknown Exception on thread run"
                     + ".\n" + exception.getMessage(),
@@ -195,8 +194,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
             return null;
         }
 
-
-        }
+    }
 
     /** Notifies main window that SwingWorker worker thread is done.
     * Overrides done method in SwingWorker class.

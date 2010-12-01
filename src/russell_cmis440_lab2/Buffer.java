@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 
 public class Buffer implements IBuffer {
 
-    private final ArrayBlockingQueue mySharedBuffer;
+    private final ArrayBlockingQueue<FileStats> mySharedBuffer;
 
     public Buffer(){
         mySharedBuffer = new ArrayBlockingQueue<FileStats>(100);
@@ -45,7 +45,7 @@ public class Buffer implements IBuffer {
     public FileStats get(){
         FileStats tempFileStatsHolder = null;
         try{
-            tempFileStatsHolder = (FileStats) mySharedBuffer.take();
+            tempFileStatsHolder = mySharedBuffer.take();
             return tempFileStatsHolder;
         }catch (InterruptedException exception){
             return null;
