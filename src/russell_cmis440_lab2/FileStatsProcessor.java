@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 */
 
 /** Creates a UDP connection on specified port/IP address;sends packet to server
- * Basically this class  reates a Datagram socket and packet based on the given
+ * Basically this class creates a Datagram socket and packet based on the given
  * port and Ip address and sends any data waiting in the Buffer object to the
  * server.
 *|----------------------------------------------------------------------------|
