@@ -61,6 +61,9 @@ public class UdpServer implements Runnable {
     private final Random generator = new Random();
     private Map< Integer, Integer > myTotalWordMap =
             new HashMap< Integer, Integer >();
+    private final int MINWAITTIME = 500;
+    private final int MAXWAITTIME = 1000;
+    private final int PACKETSIZE = 65507;
 
     /** Constructor for UdpServer; initializes variables and GUI references
     * @TheCs Cohesion - Constructor for UdpServer; initializes variables
@@ -136,7 +139,7 @@ public class UdpServer implements Runnable {
     * @exception NullPointerException when two servers tries to run on same port
     * @exception Exception general exception capture
     */
-    public void run(){
+    public void run() throws NullPointerException{
         String tempLineHolder = "";//Hold incoming data
         /**
          * ServerRun is a static variable created in the LabMainWindow class.
@@ -149,7 +152,7 @@ public class UdpServer implements Runnable {
                  * Found by method of Google that 65507 is the max size of any
                  * given UDP Packet.
                  */
-                byte[] myIncomingData = new byte[65507];
+                byte[] myIncomingData = new byte[PACKETSIZE];
                 tempLineHolder = "";
                 /** Creates a new packet named myReceivePacket that will hold
                  * incoming data. the .setSoTimeout is set to randomly generate
@@ -160,7 +163,7 @@ public class UdpServer implements Runnable {
                 DatagramPacket myReceivePacket = new
                         DatagramPacket(myIncomingData, myIncomingData.length);
                 myListenSocket.setSoTimeout(
-                        Math.min(500,generator.nextInt(1000)));
+                        Math.min(MINWAITTIME,generator.nextInt(MAXWAITTIME)));
                 myListenSocket.receive(myReceivePacket);
 
                  // The next 9 lines just update the GUI with incoming data info
@@ -226,8 +229,7 @@ public class UdpServer implements Runnable {
                         JOptionPane.ERROR_MESSAGE);
             }catch (NullPointerException exception) {
                 JOptionPane.showMessageDialog(null,"Null Pointer Exception "
-                        + "on UdpServer run.\n Are you running two or more "
-                        + "servers on the same port?\n"
+                        + "on UdpServer run.\n"
                         + exception.getMessage(),
                         "Null Pointer Exception",
                         JOptionPane.ERROR_MESSAGE);

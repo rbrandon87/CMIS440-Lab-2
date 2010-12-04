@@ -59,6 +59,7 @@ public class FileStatsProcessor implements Runnable{
     private int numOfBytesSent = 0;
     private JLabel updateClientBytesSentLabel = null;
     private int sleepTime = 0;
+    private final int MAXSLEEPTIME = 5;
   
     /**FileStatsProcessor Constructor;initialize variables and GUI reference
     * @TheCs Cohesion - FileStatsProcessor Constructor;initialize variables 
@@ -97,7 +98,7 @@ public class FileStatsProcessor implements Runnable{
              * sent. Without the sleep time, sometimes packets are missed.
              *
              */
-            sleepTime = generator.nextInt(5);
+            sleepTime = generator.nextInt(MAXSLEEPTIME);
             
         } catch (NumberFormatException exception) {
             JOptionPane.showMessageDialog(null,"Number Format Exception "

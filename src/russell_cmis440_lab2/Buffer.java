@@ -3,6 +3,7 @@ package russell_cmis440_lab2;
 import java.util.concurrent.ArrayBlockingQueue;
 import javax.swing.JOptionPane;
 
+
 /**
 * Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
 * @author Brandon R Russell
@@ -41,8 +42,7 @@ import javax.swing.JOptionPane;
 public class Buffer implements IBuffer {
 
     private final ArrayBlockingQueue<FileStats> mySharedBuffer;
-    private final int MYARRAYSIZE = 100;
-
+    private final int MYARRAYSIZE = 10;
     /**Buffer Constructor;initialize ArrayBlockingQueue
     * @TheCs Cohesion - Buffer Constructor;initialize ArrayBlockingQueue.
     * Completeness - Completely constructs buffer;initializes ArrayBlockingQueue
@@ -53,7 +53,9 @@ public class Buffer implements IBuffer {
     *               continues to use proper casing and indentation.
     */
     public Buffer(){
+        
         mySharedBuffer = new ArrayBlockingQueue<FileStats>(MYARRAYSIZE);
+        
     }
 
     /**Puts a new FileStats object onto the end of the ArrayBlockingQueue

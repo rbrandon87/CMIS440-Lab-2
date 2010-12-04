@@ -10,21 +10,22 @@ import java.util.regex.*;
 
 
 /**
-* Program Name: CMIS440 Lab 1 Word Counter
+* Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
 * @author Brandon R Russell
 * @Course CMIS440
-* Date: Nov 15, 2010
+* Date: Nov 19, 2010
 */
+
 
 /** Iterates through a text file to find unique words along w/ count.
 * It will stores the results found in a FileResults object and also in a shared
 * TotalResults object.
 *|----------------------------------------------------------------------------|
-*|                          CRC: WordCounter                                  |
+*|                          CRC: FileProcessor                                |
 *|----------------------------------------------------------------------------|
-*|Store Filename                                               ThreadControl  |
-*|Find/Store Unique Words in a Map                              TotalResults  |
-*|Find/Store Unique Word Count in a Map                          FileResults  |
+*|Store Filename                                                DfcClient     |
+*|Find/Store Unique Word Length in a Map                        Buffer        |
+*|Find/Store Unique Word Length Count in a Map                  FileStats     |
 *|                                                                            |
 *|----------------------------------------------------------------------------|
 *
@@ -42,19 +43,19 @@ import java.util.regex.*;
 public class FileProcessor implements Runnable{
     String myFileNameString;// Name of File to be counted.
     private final Buffer mySharedBuffer;//Shared object.
-    FileStats myFileStats;//FileResults object for one file.
+    FileStats myFileStats;//FileStats object for one file.
     private String myTempLineHolder = "";// Hold line input from file being read
     String myWordDelimiter = "\\p{Zs}"; //Default is a space
     Scanner readInputFile = null;
 
-    /**All data fields of the WordCounter class are initialized here.
-    * @TheCs Cohesion - All data fields of WordCounter class initialized here.
-    * Completeness - Completely all data fields of the WordCounter class
+    /**All data fields of the FileProcessor class are initialized here.
+    * @TheCs Cohesion - All data fields of FileProcessor class initialized here.
+    * Completeness - Completely all data fields of the FileProcessor class
     *                are initialized here.
-    * Convenience - Simply all data fields of the WordCounter class
+    * Convenience - Simply all data fields of the FileProcessor class
     *               are initialized here.
     * Clarity - It is simple to understand that this all data fields of the
-    *           WordCounter class are initialized here.
+    *           FileProcessor class are initialized here.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */
@@ -65,16 +66,16 @@ public class FileProcessor implements Runnable{
 
     }
 
-    /** Open a file to count unique words/count contained & stores this Data
+    /** Open a file to count unique word length/count & stores this Data
     * mySharedBuffer is synchronized since it is a shared object.
-    * @TheCs Cohesion - Open a file to count unique words/count contained &
+    * @TheCs Cohesion - Open a file to count unique word length/count &
     *                   stores this Data
-    * Completeness - Completely opens a file to count unique words/count
-    *                contained & stores this Data
-    * Convenience - Simply opens a file to count unique words/count contained
+    * Completeness - Completely opens a file to count unique word length/count
+    *                & stores this Data
+    * Convenience - Simply opens a file to count unique word length/count
     *               & stores this Data
     * Clarity - It is simple to understand that this open a file to count
-    *           unique words/count contained & stores this Data
+    *           unique word length/count & stores this Data
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     * @exception FilNotFound Exception for file input
@@ -84,10 +85,23 @@ public class FileProcessor implements Runnable{
     public void run(){
         try{
 
+            /**
+             * Creates new Scanner object with give file and use the \\z
+             * delimiter to read the entire file into the myTempLineHolder
+             * variable when the .next method is called.
+             */
             readInputFile = new Scanner(
                     new File(myFileNameString));
             readInputFile.useDelimiter("\\z");
             myTempLineHolder = readInputFile.next();
+
+            /**
+             * This regex will match against the entire file and will attempt
+             * to find a word, a word being any alphabetic character plus an
+             * apostophe, and will place this word into a group. A loop will
+             * then go through all the groups and if their length is not zero
+             * the length will be add to the FileStats object for this file.
+             */
             String extRegex = "([\\p{Alpha},\\']*)";
             Pattern pattern = Pattern.compile(extRegex, Pattern.MULTILINE);
             Matcher matcher = pattern.matcher(myTempLineHolder);
@@ -99,7 +113,7 @@ public class FileProcessor implements Runnable{
 
             }
 
-            mySharedBuffer.set(myFileStats);
+            mySharedBuffer.set(myFileStats);//Update Shared Buffer 
 
 
         }catch(FileNotFoundException exception){
@@ -117,6 +131,9 @@ public class FileProcessor implements Runnable{
         }finally{
             try{
                 if(readInputFile != null){
+                    /**
+                     * Attempt to close file if file object is not null.
+                     */
                     readInputFile.close();
                 }
             }catch(Exception exception){
@@ -129,15 +146,15 @@ public class FileProcessor implements Runnable{
 
     }
 
-    /** Retrieves the file information stored in the FileResults object.
-    * @TheCs Cohesion - Retrieves the file information stored in the FileResults
+    /** Retrieves the file information stored in the FileStats object.
+    * @TheCs Cohesion - Retrieves the file information stored in the FileStats
     *                   object.
     * Completeness - Completely retrieves the file information stored in the
-    *                FileResults object.
+    *                FileStats object.
     * Convenience - Simply retrieves the file information stored in the
-    *               FileResults object.
+    *               FileStats object.
     * Clarity - It is simple to understand that this retrieves the file
-    *           information stored in the FileResults object.
+    *           information stored in the FileStats object.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */
@@ -171,8 +188,8 @@ public class FileProcessor implements Runnable{
     * This method first checks to see if the object in question is null and
     * if so returns false. It then test to see if the objects refer to the same
     * object and returns true if they do. It then checks to see if obj is an
-    * instance of WordCounter and returns false if it is not or
-    * if so it then cast the object to an WordCounter object and test the
+    * instance of FileProcessor and returns false if it is not or
+    * if so it then cast the object to an FileProcessor object and test the
     * hashCode of each object and returns true or false depending on if the
     * hashCodes are equal or not.
     * @TheCs Cohesion - Overrides the equals method. Test for equality of two
@@ -180,11 +197,11 @@ public class FileProcessor implements Runnable{
     * Completeness - Completely test for equality of two objects.
     * Convenience -  Simply test for equality of two objects.
     * Clarity - It is simple to understand that this test for equality of two
-    *           WordCounter objects.
+    *           FileProcessor objects.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     * @param obj Check for equality against this object.
-    * @precondition obj be an WordCounter object, otherwise return false.
+    * @precondition obj be a FileProcessor object, otherwise return false.
     */
     @Override
     public boolean equals(Object obj){

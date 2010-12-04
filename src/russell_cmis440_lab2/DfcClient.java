@@ -172,12 +172,13 @@ public class DfcClient extends SwingWorker<Void, Void>{
         try{
             int progress = 0;
             setProgress(0); //Updates progress bar on main window
-
+            myApplication.execute(myFileStatsProcessor);
+            
             for(progress=0; progress< myFileNames.length; progress++){
                 myApplication.execute( new FileProcessor(myFileNames[progress], mySharedBuffer));
                 setProgress(Math.min(progress, 90));
             }
-                myApplication.execute(myFileStatsProcessor);
+                
 
                 //myApplication.awaitTermination(5, TimeUnit.SECONDS);
                 while (mySharedBuffer.getBufferSize() >= 0){
