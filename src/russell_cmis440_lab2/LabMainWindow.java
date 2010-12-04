@@ -10,7 +10,7 @@ package russell_cmis440_lab2;
 * Java: JDK 1.6.0_22
 * Files: LabMainWindow.java, DfcServer.java, UdpServer.java,
 *        FileStatsProcessor.java, Buffer.java, FileProcessor.java,
-*        FileStats.java, DfcClient.java
+*        FileStats.java, DfcClient.java, IBuffer.java
 *
 * Program Requirements:
 *Client:
@@ -55,7 +55,7 @@ package russell_cmis440_lab2;
 *received datagrams to the console as strings.
 *A distributed file counter server class named DfcServer whose 'main' method
 *will create an instance of UdpServer and place it in its own Thread and then
-*wait indefinately (we are not going to worry about gracefully shutting
+*wait indefinitely (we are not going to worry about gracefully shutting
 *down the server).
 *Assignment Optional Implementations:
 *Create a GUI for the Client and / or Server application.
@@ -838,10 +838,16 @@ public class LabMainWindow extends javax.swing.JFrame
     *               continues to use proper casing and indentation.
     *
     * @param args the command line arguments
+    * @exception UnsupportedLookAndFeelException for UIManager method
+    * @exception ClassNotFoundException for UIManager method
+    * @exception InstantiationException for UIManager method
+    * @exception IllegalAccessException for UIManager method
     */
     public static void main(String args[]) {
         try{
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            //Sets Look and Feel of GUI to Nimbus.
+            UIManager.setLookAndFeel(
+                    "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
         }catch (UnsupportedLookAndFeelException exception) {
             JOptionPane.showMessageDialog(null,exception.getMessage(),
@@ -861,6 +867,10 @@ public class LabMainWindow extends javax.swing.JFrame
                     JOptionPane.ERROR_MESSAGE);
         }
 
+        /**
+         * After the UIManager is updated, then make a new Runnable on the
+         * SwingUtilities.invoke later to run the program and make it visible.
+         */
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new LabMainWindow().setVisible(true);
