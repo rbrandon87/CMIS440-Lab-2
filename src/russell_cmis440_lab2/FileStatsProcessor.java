@@ -198,10 +198,11 @@ public class FileStatsProcessor implements Runnable{
                     + exception.getMessage(),"Security Exception",
                     JOptionPane.ERROR_MESSAGE);
         }catch (InterruptedException exception){
-            JOptionPane.showMessageDialog(null,"Interrupted Exception"
-                    + "on FileStatsProcessor run method.\n"
-                    + exception.getMessage(),"Interrupted Exception",
-                    JOptionPane.ERROR_MESSAGE);
+            /**
+             * This should only occur when the user clicks the cancel button, so
+             * I did not put a JOptionPane here; otherwise it would should
+             * one for potentially many files.
+             */
         }catch (UnknownHostException exception){
             JOptionPane.showMessageDialog(null,"Unknown Host Exception"
                     + "on FileStatsProcessor run method.\n"

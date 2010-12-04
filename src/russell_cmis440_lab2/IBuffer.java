@@ -57,6 +57,4 @@ public interface IBuffer {
     */
     public FileStats get();
 
-    
-
 }

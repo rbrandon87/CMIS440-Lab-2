@@ -288,6 +288,7 @@
         <Component class="javax.swing.JTextField" name="txtClientIpAddress">
           <Properties>
             <Property name="text" type="java.lang.String" value="127.0.0.1"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter IP address of Server"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblClientIpAddress">
@@ -298,6 +299,7 @@
         <Component class="javax.swing.JTextField" name="txtClientPort">
           <Properties>
             <Property name="text" type="java.lang.String" value="5000"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter Port of Server"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblClientPort">
@@ -312,6 +314,7 @@
               <Connection code="new FileNameExtensionFilter(&quot;Text Files&quot;, &quot;txt&quot;)" type="code"/>
             </Property>
             <Property name="fileSelectionMode" type="int" value="2"/>
+            <Property name="toolTipText" type="java.lang.String" value="Choose one, multiple, or an entire directory of text files"/>
             <Property name="multiSelectionEnabled" type="boolean" value="true"/>
           </Properties>
         </Component>
@@ -323,6 +326,7 @@
         <Component class="javax.swing.JButton" name="btnClientStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="Start"/>
+            <Property name="toolTipText" type="java.lang.String" value="Click here to start processing files"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientStartActionPerformed"/>
@@ -331,6 +335,7 @@
         <Component class="javax.swing.JButton" name="btnClientCancel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
+            <Property name="toolTipText" type="java.lang.String" value="Click Here to cancel processing files"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -339,6 +344,7 @@
         </Component>
         <Component class="javax.swing.JProgressBar" name="clientProgressBar">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Progress of file processing"/>
             <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
@@ -350,6 +356,7 @@
         <Component class="javax.swing.JLabel" name="lblClientBytesSent">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Shows bytes sent"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -370,11 +377,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane2" pref="541" max="32767" attributes="0"/>
+                          <Component id="myTotalOutputScrollPane" pref="541" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="541" max="32767" attributes="0"/>
+                          <Component id="myServerOutputScrollPane" pref="541" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -440,11 +447,11 @@
                       <Component id="btnClearServerOutput" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="298" max="-2" attributes="0"/>
+                  <Component id="myServerOutputScrollPane" min="-2" pref="298" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Component id="lblTotalOutputTextArea" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="131" max="32767" attributes="0"/>
+                  <Component id="myTotalOutputScrollPane" pref="131" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -477,6 +484,7 @@
         <Component class="javax.swing.JTextField" name="txtServerPort">
           <Properties>
             <Property name="text" type="java.lang.String" value="5000"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter port for server to listen on"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblServerIpAddress">
@@ -484,7 +492,16 @@
             <Property name="text" type="java.lang.String" value="External IP Address:"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Component class="javax.swing.JButton" name="btnClearServerOutput">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Clear"/>
+            <Property name="toolTipText" type="java.lang.String" value="Clear output and output total text areas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearServerOutputActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="myServerOutputScrollPane">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -499,6 +516,7 @@
                   <Font name="Courier New" size="12" style="0"/>
                 </Property>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="toolTipText" type="java.lang.String" value="Shows output sent to server"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -508,9 +526,30 @@
             <Property name="text" type="java.lang.String" value="Output:"/>
           </Properties>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="myTotalOutputScrollPane">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="txtTotalOutput">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Courier New" size="12" style="0"/>
+                </Property>
+                <Property name="rows" type="int" value="5"/>
+                <Property name="toolTipText" type="java.lang.String" value="Shows total count for data sent to server"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
         <Component class="javax.swing.JButton" name="btnServerStart">
           <Properties>
             <Property name="text" type="java.lang.String" value="Start Listening"/>
+            <Property name="toolTipText" type="java.lang.String" value="Start the server"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServerStartActionPerformed"/>
@@ -519,6 +558,7 @@
         <Component class="javax.swing.JButton" name="btnServerStop">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop Listening"/>
+            <Property name="toolTipText" type="java.lang.String" value="Stop the server"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -526,14 +566,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JProgressBar" name="serverProgressBar">
-        </Component>
-        <Component class="javax.swing.JButton" name="btnClearServerOutput">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clear"/>
+            <Property name="toolTipText" type="java.lang.String" value="Shows when server is running"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearServerOutputActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDataCheck">
           <Properties>
@@ -553,11 +588,13 @@
         <Component class="javax.swing.JLabel" name="lblTotalServerBytesReceived">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Shows total bytes received since server was started"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblServerBytesReceived">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Shows bytes received from one client"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblServerBytesLabel">
@@ -565,25 +602,6 @@
             <Property name="text" type="java.lang.String" value="Bytes Received:"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTextArea" name="txtTotalOutput">
-              <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="editable" type="boolean" value="false"/>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Courier New" size="12" style="0"/>
-                </Property>
-                <Property name="rows" type="int" value="5"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
         <Component class="javax.swing.JLabel" name="lblTotalOutputTextArea">
           <Properties>
             <Property name="text" type="java.lang.String" value="Output Totals:"/>

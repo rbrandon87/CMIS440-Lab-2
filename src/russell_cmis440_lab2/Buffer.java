@@ -78,13 +78,14 @@ public class Buffer implements IBuffer {
         try{
             mySharedBuffer.put(newFileStatBuffer);
         }catch (InterruptedException exception){
-            JOptionPane.showMessageDialog(null,"Interrupted Exception "
-                    + "on Buffer Construct.\n"
-                    + exception.getMessage(),"Interrupted Exception",
-                    JOptionPane.ERROR_MESSAGE);
+            /**
+             * This should only occur when the user clicks the cancel button, so
+             * I did not put a JOptionPane here; otherwise it would should
+             * one for potentially many files.
+             */
         }catch (Exception exception){
             JOptionPane.showMessageDialog(null,"Unknown Exception "
-                    + "on Buffer Construct.\n"
+                    + "on Buffer set.\n"
                     + exception.getMessage(),"Unknown Exception",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -111,14 +112,15 @@ public class Buffer implements IBuffer {
             tempFileStatsHolder = mySharedBuffer.take();
             return tempFileStatsHolder;
         }catch (InterruptedException exception){
-            JOptionPane.showMessageDialog(null,"Interrupted Exception "
-                    + "on Buffer Construct.\n"
-                    + exception.getMessage(),"Interrupted Exception",
-                    JOptionPane.ERROR_MESSAGE);
+            /**
+             * This should only occur when the user clicks the cancel button, so
+             * I did not put a JOptionPane here; otherwise it would should
+             * one for potentially many files.
+             */
             return null;
         }catch (Exception exception){
             JOptionPane.showMessageDialog(null,"Unknown Exception "
-                    + "on Buffer Construct.\n"
+                    + "on Buffer get.\n"
                     + exception.getMessage(),"Unknown Exception",
                     JOptionPane.ERROR_MESSAGE);
             return null;
