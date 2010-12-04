@@ -138,8 +138,6 @@ public class FileStatsProcessor implements Runnable{
     */
     public void run(){
         try{
-            byte[] myNumOfFilesDataToSend =numOfFilesToProcess.toString()
-                    .getBytes();
             /**
              * Creates a DatagramPacket to be sent to the specified server. Then
              * it saves this information in numOfBytesSent which is used to
@@ -149,6 +147,12 @@ public class FileStatsProcessor implements Runnable{
              * server. The GUI is updated and then the thread sleeps for a
              * short period of time to ensure all packets are sent.
              */
+            /**
+             * This first byte array being sent contains the string that
+             * tells how many files are being processed.
+             */
+            byte[] myNumOfFilesDataToSend =numOfFilesToProcess.toString()
+                    .getBytes();
             DatagramPacket mySendNumOfFilesPacket = new DatagramPacket(
                     myNumOfFilesDataToSend, myNumOfFilesDataToSend.length,
                     InetAddress.getByName(myServerIpAddress), myServerPort);
@@ -157,6 +161,9 @@ public class FileStatsProcessor implements Runnable{
 
             for(numOfFilesSent = 0; numOfFilesSent < numOfFilesToProcessInteger;
             numOfFilesSent++){
+                /**
+                 * tempLineHolder = "File x) + Shared Buffer data
+                 */
                 tempLineHolder = ":\n\n File " + 
                         Integer.toString(numOfFilesSent) + ") " +
                         mySharedBuffer.get().toString();
@@ -166,6 +173,10 @@ public class FileStatsProcessor implements Runnable{
                         InetAddress.getByName(myServerIpAddress), myServerPort);
                 myDatagramSocket.send(mySendPacket);
             numOfBytesSent += mySendPacket.getLength();
+            /**
+             * Update GUI with number of bytes sent and then sleeps for a short
+             * period of time.
+             */
             updateClientBytesSentLabel.setText(String.valueOf(numOfBytesSent));
                 Thread.sleep(sleepTime);
             }

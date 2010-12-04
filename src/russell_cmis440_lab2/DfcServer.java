@@ -8,6 +8,8 @@ import javax.swing.JOptionPane; //For Exception Handling
 import java.util.concurrent.ExecutionException;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 
 /**
 * Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
@@ -64,18 +66,31 @@ public class DfcServer extends SwingWorker<Void, Void> {
     * @param aBytesReceivedLabel label shows bytes received per send
     * @param aTotalBytesReceivedLabel label show total bytes received
     * @param aTxtTotalOutput TextArea show file information totals
+    * @exception Exception if port already in use by another server
     */
     public DfcServer(int aServerPort, JTextArea aJOutputTextArea, 
             JLabel aDataCheckLabel, JLabel aBytesReceivedLabel,
-            JLabel aTotalBytesReceivedLabel, JTextArea aTxtTotalOutput){
-        /**
-         * Create new UdpServer object with port and GUI references
-         * Create Executor object to run UdpServer object in its own thread
-         */
-        myUdpServer = new UdpServer(aServerPort, aJOutputTextArea, 
-                aDataCheckLabel, aBytesReceivedLabel, aTotalBytesReceivedLabel,
-                aTxtTotalOutput);
-        myApplication = Executors.newCachedThreadPool();
+            JLabel aTotalBytesReceivedLabel, JTextArea aTxtTotalOutput) 
+            throws Exception{
+        try{
+            /**
+             * Create new UdpServer object with port and GUI references
+             * Create Executor object to run UdpServer object in its own thread
+             */
+            /**
+             * Using the isPortAvailable method, if the port given is already in
+             * use an exception is thrown.
+             */
+            if (!isPortAvailable(aServerPort)){
+                throw new Exception("Port Specified already in use.");
+            }
+            myUdpServer = new UdpServer(aServerPort, aJOutputTextArea,
+                    aDataCheckLabel, aBytesReceivedLabel,
+                    aTotalBytesReceivedLabel,aTxtTotalOutput);
+            myApplication = Executors.newCachedThreadPool();
+        }catch (Exception exception){
+            throw new Exception(exception);
+        }
     }
 
     /** Add myUdpServer to Executor ThreadPool and execute.
@@ -146,9 +161,40 @@ public class DfcServer extends SwingWorker<Void, Void> {
         try {
             get();
         } catch (final InterruptedException ex) {
-            throw new RuntimeException(ex);
+            JOptionPane.showMessageDialog(null,"Interrupted Exception on thread"
+                    + " done.\n" + ex.getMessage(),
+                    "Interrupted Exception",
+                    JOptionPane.ERROR_MESSAGE);
         } catch (final ExecutionException ex) {
-            throw new RuntimeException(ex.getCause());
+            JOptionPane.showMessageDialog(null,"Execution Exception on thread"
+                    + " done.\n" + ex.getMessage(),
+                    "Execution Exception",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /** Takes specified server port and determines if available
+    * @TheCs Cohesion - Takes specified server port and determines if available.
+    * Completeness - Completely takes specified server port and determines
+    *                if available.
+    * Convenience - Simply takes specified server port and determines
+    *                if available.
+    * Clarity - It is simple to understand that this takes specified server
+    * port and determines if available.
+    * Consistency - It uses the same syntax rules as the rest of the class and
+    *               continues to use proper casing and indentation.
+    */
+    private static boolean isPortAvailable(int aPort) {
+        try{
+            /**Temporarily create a DatagramSocket with specified Server port to
+             * determine if it is available for use.
+             */
+            DatagramSocket myTestSocket = new DatagramSocket(aPort);
+            myTestSocket.close();
+            myTestSocket = null;
+            return true; //Return true if available
+        }catch (SocketException exception){
+            return false;//Return false if already in use
         }
     }
 

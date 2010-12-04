@@ -4,19 +4,20 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
+
 /**
-* Program Name: CMIS440 Lab 1 Word Counter
+* Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
 * @author Brandon R Russell
 * @Course CMIS440
-* Date: Nov 15, 2010
+* Date: Nov 19, 2010
 */
 
-/** The Results class holds the Filename and Word count Map for a given File.
+/** The FileStats class holds the filename/word length count map for a File.
 *|----------------------------------------------------------------------------|
-*|                                CRC: FileResults                            |
+*|                                CRC: FileStats                              |
 *|----------------------------------------------------------------------------|
-*|Set/Retrieve Filename                                        ThreadControl  |
-*|Set/Retrieve Word Map                                          WordCounter  |
+*|Set/Retrieve Filename                                        DfcClient      |
+*|Set/Retrieve Word Length Map                                 FileProcessor  |
 *|                                                                            |
 *|----------------------------------------------------------------------------|
 *
@@ -32,10 +33,11 @@ import java.util.TreeSet;
 
 public class FileStats {
     private String myFileName;
-    private Map< Integer, Integer > myWordMap = new HashMap< Integer, Integer >();
+    private Map< Integer, Integer > myWordLenMap
+            = new HashMap< Integer, Integer >();
     private StringBuilder myFormattedResults = new StringBuilder();
 
-    /** All Data Fields of the Results class are initialized here.
+    /** All Data Fields of the FileStats class are initialized here.
     * @TheCs Cohesion - The Constructor.
     * Completeness - Every class should have a constructor, even if it is
     *                blank.
@@ -76,46 +78,58 @@ public class FileStats {
         return myFileName;
     }
 
-    /** Updates the unique word count in the word map
-    * @TheCs Cohesion - Updates the unique word count in the word map
-    * Completeness - Completely updates the unique word count in the word map
-    * Convenience - Simply updates the unique word count in the word map
-    * Clarity - It is simple to understand that this Updates the unique word
-    *           count in the word map
+    /** Updates the unique word length count in the word length map
+    * @TheCs Cohesion - Updates the unique word length count in the word length
+    *                   map.
+    * Completeness - Completely updates the unique length word count in the
+    *                word length map.
+    * Convenience - Simply updates the unique word length count in the word
+    *               length map.
+    * Clarity - It is simple to understand that this updates the unique word
+    *           length count in the word length map.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     * @param aWord contains the word to be added and counted to the map.
     */
     public void addWordToMap(Integer aWordLen){
-        if (myWordMap.containsKey(aWordLen)){
-            int count = myWordMap.get(aWordLen);
-            myWordMap.put(aWordLen, count+1); //Not a new word; increase count by 1
+        if (myWordLenMap.containsKey(aWordLen)){
+            /**
+             * If the passed word length is already contained in the map
+             * increase current count by one.
+             */
+            int count = myWordLenMap.get(aWordLen);
+            myWordLenMap.put(aWordLen, count+1);
         }
         else{
-            myWordMap.put(aWordLen, 1); //New word; put in map and start count at 1
+            /**
+             * else, if the map does not contain the passed word length then
+             * start count at one.
+             */
+            myWordLenMap.put(aWordLen, 1);
         }
     }
 
-    /** Returns the current word map with unique words and count
-    * @TheCs Cohesion - Returns the current word map with unique words and count
-    * Completeness - Completely returns the current word map with unique words
-    *                and count.
-    * Convenience - Simply returns the current word map with unique words and
-    *               count.
+    /** Returns the current word length map with unique word lengths and count
+    * @TheCs Cohesion - Returns the current word length map with unique word
+    *                   lengths and count.
+    * Completeness - Completely returns the current word length map with unique
+    *                word lengths and count.
+    * Convenience - Simply returns the current word length map with unique word
+    *               lengths and count.
     * Clarity - It is simple to understand that this returns the current word
-    *           map with unique words and count.
+    *           length map with unique word lengths and count.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */
     public Map< Integer, Integer > getWordMap(){
-        return myWordMap;
+        return myWordLenMap;
     }
 
 
     /** Overrides the toString method to provide more meaningful content. I
-    * decided to print the FileName followed by a table format of word and then
-    * count as well as totals at the bottom to give a good picture of what
-    * the file contained.
+    * decided to print the FileName followed by a table format of word length
+    * and then count as well as totals at the bottom to give a good picture of
+    * what the file contained.
     * @TheCs Cohesion - Overrides the toString method to provide more meaningful
     *                   content.
     * Completeness - Completely overrides the toString method to provide more
@@ -129,6 +143,12 @@ public class FileStats {
     */
     @Override
     public String toString(){
+        /**
+         * Basically I use formattedLine with format to form the strings in a
+         * particular way to aid in readability of the output and I then append
+         * this to a StringBuilder, myFormattedResults, and eventually return
+         * the string format of this StringBuilder.
+         */
         String formattedLine = "";
         int maxLength = 15;
         int numberOfWords = 0;
@@ -148,8 +168,13 @@ public class FileStats {
         TreeSet < Integer > sortedKeys = new TreeSet< Integer >( keys);
 
         for (Integer key : sortedKeys){
-            formattedLine = String.format(format,key.toString().length() <= maxLength ?
-                key : key.toString().substring(0, maxLength),getWordMap().get(key));
+            /**
+             * If key is less than 15 characters print the entire key, otherwise
+             * print a substring of the key contains the first 15 characters.
+             */
+            formattedLine = String.format(format,key.toString().length() <= 
+                    maxLength ? key : key.toString().substring(0, maxLength),
+                                                        getWordMap().get(key));
             myFormattedResults.append(formattedLine);
             numberOfWords += getWordMap().get(key);
         }

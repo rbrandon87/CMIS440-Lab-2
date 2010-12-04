@@ -61,9 +61,9 @@ public class UdpServer implements Runnable {
     private final Random generator = new Random();
     private Map< Integer, Integer > myTotalWordMap =
             new HashMap< Integer, Integer >();
-    private final int MINWAITTIME = 500;
-    private final int MAXWAITTIME = 1000;
-    private final int PACKETSIZE = 576;
+    private final int MINWAITTIME = 1000;
+    private final int MAXWAITTIME = 2000;
+    private final int PACKETSIZE = 4096;
 
     /** Constructor for UdpServer; initializes variables and GUI references
     * @TheCs Cohesion - Constructor for UdpServer; initializes variables
@@ -139,7 +139,7 @@ public class UdpServer implements Runnable {
     * @exception NullPointerException when two servers tries to run on same port
     * @exception Exception general exception capture
     */
-    public void run() throws NullPointerException{
+    public void run(){
         String tempLineHolder = "";//Hold incoming data
         /**
          * ServerRun is a static variable created in the LabMainWindow class.
@@ -149,8 +149,9 @@ public class UdpServer implements Runnable {
         while(LabMainWindow.ServerRun) {
             try {
                 /**
-                 * Found by method of Google that 65507 is the max size of any
-                 * given UDP Packet.
+                 * PACKETSIZE can be adjusted to find best size to prevent data
+                 * loss, but not waste memory and to be compatible for Internet
+                 * protocols.
                  */
                 byte[] myIncomingData = new byte[PACKETSIZE];
                 tempLineHolder = "";

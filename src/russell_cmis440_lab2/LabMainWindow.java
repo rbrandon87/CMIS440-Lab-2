@@ -88,8 +88,6 @@ import java.io.File;
 import java.net.InetAddress;
 import java.util.concurrent.CancellationException;
 import java.util.regex.*;
-import java.net.DatagramSocket;
-import java.net.SocketException;
 /** This is the main window of operation for the entire program. The purpose of
 * this class is to create a GUI Interface that will allow the user to make
 * selections of text files for the purpose of finding the unique words used and
@@ -969,13 +967,9 @@ public class LabMainWindow extends javax.swing.JFrame
 
             /**
              * NumberFormatException thrown if tempPortHolder contains anything
-             * but numbers. Also, using the isPortAvailable method, if the
-             * port given is already in use an exception is thrown.
+             * but numbers.
              */
-            int tempPortHolder = Integer.parseInt(txtServerPort.getText());
-            if (!isPortAvailable(tempPortHolder)){
-                throw new Exception("Port Specified already in use.");
-            }         
+            int tempPortHolder = Integer.parseInt(txtServerPort.getText());     
             /**
              * Labels are passed with DfcServer object to update byte counters
              * and label that tells if waiting or receiving data. Also TextArea
@@ -1150,30 +1144,7 @@ public class LabMainWindow extends javax.swing.JFrame
         Toolkit.getDefaultToolkit().beep();
     }
 
-    /** Takes specified server port and determines if available
-    * @TheCs Cohesion - Takes specified server port and determines if available.
-    * Completeness - Completely takes specified server port and determines
-    *                if available.
-    * Convenience - Simply takes specified server port and determines
-    *                if available.
-    * Clarity - It is simple to understand that this takes specified server
-    * port and determines if available.
-    * Consistency - It uses the same syntax rules as the rest of the class and
-    *               continues to use proper casing and indentation.
-    */
-    private static boolean isPortAvailable(int aPort) {
-        try{
-            /**Temporarily create a DatagramSocket with specified Server port to
-             * determine if it is available for use.
-             */
-            DatagramSocket myTestSocket = new DatagramSocket(aPort);
-            myTestSocket.close();
-            myTestSocket = null;
-            return true; //Return true if available
-        }catch (SocketException exception){
-            return false;//Return false if already in use
-        }
-    }
+
 
     public static boolean ServerRun = true; //Control loop in UdpServer
     DfcServer myDfcServer = null; //Start Server Listening for Data

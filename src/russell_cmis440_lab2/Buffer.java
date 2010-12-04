@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 *|Initially created and passed as reference              DfcClient            |
 *|Fill buffer with FileStats object                      FileProcessor        |
 *|Send FileStats object from Buffer to Server            FileStatsProcessor   |
+*|                                                       IBuffer              |
 *|----------------------------------------------------------------------------|
 *
 * @TheCs Cohesion - All methods in this class work together on similar task.
@@ -125,39 +126,5 @@ public class Buffer implements IBuffer {
 
     }
 
-    /**Returns current size of ArrayBlockingQueue. Used by DfcClient
-    * @TheCs Cohesion - Returns current size of ArrayBlockingQueue. Used by
-    *                   DfcClient.
-    * Completeness - Completely returns current size of ArrayBlockingQueue.
-    *                Used by DfcClient.
-    * Convenience - Simply returns current size of ArrayBlockingQueue.
-    *               Used by DfcClient.
-    * Clarity - It is simple to understand that this returns current size of
-    *           ArrayBlockingQueue. Used by DfcClient.
-    * Consistency - It uses the same syntax rules as the rest of the class and
-    *               continues to use proper casing and indentation.
-    * @exception Exception general capture exception
-    */
-    public int getBufferSize(){
-        try{
-            /**
-             * This basically takes the entire size of the Array and subtracts
-             * the remaining empty segments of it, thus giving the the number
-             * of FileStats object currently in the Buffer. This is used by the
-             * DfcClient object to hold the doInBackground method from finishing
-             * . This is more for appearance than stability. I did not see less
-             * data loss without this, however without the progress bar and
-             * bytes received labels frequently did not show accurately.
-             */
-            return (mySharedBuffer.size() - mySharedBuffer.remainingCapacity());
-        }catch (Exception exception){
-            JOptionPane.showMessageDialog(null,"Unknown Exception "
-                    + "on Buffer Construct.\n"
-                    + exception.getMessage(),"Unknown Exception",
-                    JOptionPane.ERROR_MESSAGE);
-            return 0;
-        }
-        
-    }
 
 }
