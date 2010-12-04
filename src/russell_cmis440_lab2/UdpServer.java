@@ -63,7 +63,7 @@ public class UdpServer implements Runnable {
             new HashMap< Integer, Integer >();
     private final int MINWAITTIME = 500;
     private final int MAXWAITTIME = 1000;
-    private final int PACKETSIZE = 65507;
+    private final int PACKETSIZE = 576;
 
     /** Constructor for UdpServer; initializes variables and GUI references
     * @TheCs Cohesion - Constructor for UdpServer; initializes variables
