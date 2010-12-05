@@ -80,7 +80,7 @@ public class Buffer implements IBuffer {
         }catch (InterruptedException exception){
             /**
              * This should only occur when the user clicks the cancel button, so
-             * I did not put a JOptionPane here; otherwise it would should
+             * I did not put a JOptionPane here; otherwise it would produce
              * one for potentially many files.
              */
         }catch (Exception exception){
@@ -114,7 +114,7 @@ public class Buffer implements IBuffer {
         }catch (InterruptedException exception){
             /**
              * This should only occur when the user clicks the cancel button, so
-             * I did not put a JOptionPane here; otherwise it would should
+             * I did not put a JOptionPane here; otherwise it would produce
              * one for potentially many files.
              */
             return null;

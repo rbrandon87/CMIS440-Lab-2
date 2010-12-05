@@ -911,7 +911,7 @@ public class LabMainWindow extends javax.swing.JFrame
                         "IP address does not appear "
                         + "to be correct. Would you like to change it?",
                         "IP Address Warning",JOptionPane.YES_NO_OPTION);
-                if (tempHoldJOptionAnswer == JOptionPane.YES_NO_OPTION){
+                if (tempHoldJOptionAnswer == JOptionPane.YES_OPTION){
                     return;
                 }
             }

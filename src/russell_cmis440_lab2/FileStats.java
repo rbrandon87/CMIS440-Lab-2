@@ -13,6 +13,8 @@ import java.util.TreeSet;
 */
 
 /** The FileStats class holds the filename/word length count map for a File.
+* Basically this class has a Map of type Integer, Integer that will hold the
+* word lengths and their occurrences for the file this object was created for.
 *|----------------------------------------------------------------------------|
 *|                                CRC: FileStats                              |
 *|----------------------------------------------------------------------------|
@@ -180,9 +182,9 @@ public class FileStats {
         }
 
         myFormattedResults.append("-----------------------------------\n");
-        formattedLine = "Total number of unique words found : " + keys.size() +
-                " :\n" + "Total number of words found : " + numberOfWords
-                + " :\n\n";
+        formattedLine = "Total number of unique word lengths found : " +
+                keys.size() + " :\n" + "Total number of word lengths found : " +
+                numberOfWords + " :\n\n";
         myFormattedResults.append(formattedLine);
 
         return myFormattedResults.toString();

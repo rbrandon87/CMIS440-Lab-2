@@ -61,9 +61,9 @@ public class UdpServer implements Runnable {
     private final Random generator = new Random();
     private Map< Integer, Integer > myTotalWordMap =
             new HashMap< Integer, Integer >();
-    private final int MINWAITTIME = 1000;
-    private final int MAXWAITTIME = 2000;
-    private final int PACKETSIZE = 4096;
+    private final int MINWAITTIME = 1000;//Socket Timeout
+    private final int MAXWAITTIME = 2000;//Socket Timeout
+    private final int PACKETSIZE = 4096;// Size of byte array for receiving
 
     /** Constructor for UdpServer; initializes variables and GUI references
     * @TheCs Cohesion - Constructor for UdpServer; initializes variables
@@ -355,16 +355,17 @@ public class UdpServer implements Runnable {
              * If key is less than 15 characters print the entire key, otherwise
              * print a substring of the key contains the first 15 characters.
              */
-            formattedLine = String.format(format,key.toString().length() <= maxLength ?
-                key : key.toString().substring(0, maxLength),getWordMap().get(key));
+            formattedLine = String.format(format,key.toString().length() <=
+                    maxLength ? key : key.toString().substring(0, maxLength),
+                                                        getWordMap().get(key));
             myFormattedResults.append(formattedLine);
             numberOfWords += getWordMap().get(key);
         }
 
         myFormattedResults.append("-----------------------------------\n");
-        formattedLine = "Total number of unique words found : " + keys.size() +
-                " :\n" + "Total number of words found : " + numberOfWords
-                + " :\n\n";
+        formattedLine = "Total number of unique word lengths found : " +
+                keys.size() + " :\n" + "Total number of word lengths found : " +
+                numberOfWords + " :\n\n";
         myFormattedResults.append(formattedLine);
 
         return myFormattedResults.toString();
