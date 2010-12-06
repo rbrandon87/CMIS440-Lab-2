@@ -157,9 +157,9 @@ public class UdpServer implements Runnable {
                 tempLineHolder = "";
                 /** Creates a new packet named myReceivePacket that will hold
                  * incoming data. the .setSoTimeout is set to randomly generate
-                 * between 500 and 1000 milliseconds. This basically tells the
-                 * socket how long to wait after it has received data to
-                 * continue waiting for new data.
+                 * between MINWAITTIME and MAXWAITTIME milliseconds.
+                 * This basically tells the socket how long to wait after
+                 * it has received data to continue waiting for new data.
                  */
                 DatagramPacket myReceivePacket = new
                         DatagramPacket(myIncomingData, myIncomingData.length);
@@ -182,6 +182,11 @@ public class UdpServer implements Runnable {
                  * Regex will match the incoming file data to keep a running
                  * total of total word lengths along with their counts stored in
                  * a Map here on the Server side.
+                 */
+                /**
+                 * This regex is setup to match the toString I setup, for
+                 * example "|1               |               7|" would match
+                 * the 1 and 7.
                  */
                 String extRegex = "\\|(\\d*)\\s*\\|\\s*(\\d*)\\|";
                 Pattern pattern = Pattern.compile(extRegex, Pattern.MULTILINE);

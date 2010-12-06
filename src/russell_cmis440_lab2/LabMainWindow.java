@@ -942,12 +942,12 @@ public class LabMainWindow extends javax.swing.JFrame
             myDfcClient.execute(); //Begin Worker Thread
 
         }catch (NumberFormatException exception) {
-            setClientControlsToActive();
+            setClientControlsToActive();//Enable Start buttons
             JOptionPane.showMessageDialog(null,exception.getMessage(),
                     "NumberFormatException Thrown on Client Start Process",
                     JOptionPane.ERROR_MESSAGE);
         }catch (Exception exception) {
-            setClientControlsToActive();
+            setClientControlsToActive();//Enable Start buttons
             JOptionPane.showMessageDialog(null,exception.getMessage(),
                     "Exception Thrown on Client Start Process",
                     JOptionPane.ERROR_MESSAGE);
@@ -971,6 +971,11 @@ public class LabMainWindow extends javax.swing.JFrame
     private void stopProcessingFiles(){
         try{
             if (myDfcClient != null){
+                /**
+                 * If myDfcClient is not null then make a call to the
+                 * myApplication variable to stop all file being processed
+                 * and then tells the SwingWorker to stop working.
+                 */
                 myDfcClient.myApplication.shutdownNow();//Stop active tasks
                 myDfcClient.cancel(true); //Stop SwingWorker
 
@@ -1031,12 +1036,12 @@ public class LabMainWindow extends javax.swing.JFrame
             myDfcServer.addPropertyChangeListener(this);
             myDfcServer.execute(); //Begin Worker Thread
         }catch (NumberFormatException exception){
-            setServerControlsToActive();
+            setServerControlsToActive();//Enable Start buttons/Byte counter to 0
             JOptionPane.showMessageDialog(null,exception.getMessage(),
                     "NumberFormatException Thrown on Server Start Process",
                     JOptionPane.ERROR_MESSAGE);
         }catch (Exception exception){
-            setServerControlsToActive();
+            setServerControlsToActive();//Enable Start buttons/Byte counter to 0
             JOptionPane.showMessageDialog(null,exception.getMessage(),
                     "Exception Thrown on Server Start Process",
                     JOptionPane.ERROR_MESSAGE);

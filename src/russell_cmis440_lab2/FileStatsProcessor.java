@@ -10,7 +10,7 @@ import java.net.PortUnreachableException;
 import java.nio.channels.IllegalBlockingModeException;
 import java.util.Random;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane; //For Exception handling
 
 /**
 * Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 
 /** Creates a UDP connection on specified port/IP address;sends packet to server
  * Basically this class creates a Datagram socket and packet based on the given
- * port and Ip address and sends any data waiting in the Buffer object to the
+ * port and IP address and sends any data waiting in the Buffer object to the
  * server.
 *|----------------------------------------------------------------------------|
 *|                           CRC: FileStatsProcessor                          |
@@ -90,6 +90,9 @@ public class FileStatsProcessor implements Runnable{
             myDatagramSocket = new DatagramSocket();
             numOfFilesToProcess = "Total number of files : " +
                     aNumOfFilesToProcess + " :\n\n: ";
+            /**
+             * NumberFormatException for Integer parsing below
+             */
             numOfFilesToProcessInteger = Integer.parseInt(aNumOfFilesToProcess);
             updateClientBytesSentLabel = alblClientBytesSentLabel;
             updateClientBytesSentLabel.setText("0");

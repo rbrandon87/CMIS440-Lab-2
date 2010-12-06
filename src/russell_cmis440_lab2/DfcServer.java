@@ -6,8 +6,8 @@ import java.util.concurrent.RejectedExecutionException;
 import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 import javax.swing.JOptionPane; //For Exception Handling
 import java.util.concurrent.ExecutionException;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;//For Passing reference to UdpServer
+import javax.swing.JLabel;//For Passing reference to UdpServer
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
@@ -159,6 +159,10 @@ public class DfcServer extends SwingWorker<Void, Void> {
     @Override
     public void done(){
         try {
+            /**
+             * The doInBackground method here doesn't really return anything,
+             * I just have this get() method here for completion.
+             */
             get();
         } catch (final InterruptedException ex) {
             JOptionPane.showMessageDialog(null,"Interrupted Exception on thread"

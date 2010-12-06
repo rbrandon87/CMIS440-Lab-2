@@ -11,12 +11,11 @@ import javax.swing.JOptionPane;
 * Date: Nov 19, 2010
 */
 
-/** Creates an ArrayBlockingQueue of FileStats. Buffer between client and server.
+/** Creates an ArrayBlockingQueue of FileStats. Buffer between client and server
 * Basically this class creates an ArrayBlockingQueue of FileStats with a length
-* of 100. I tested different array lengths, but didn't see any difference in
-* performance or stability so I decided 100 was a solid number to use. There is
-* only a set and get method here that either puts a FileStats object onto the
-* end of the Array or takes one from the front.
+* of 10. I tested different array lengths and decided 10 was the best number
+* to use. There is only a set and get method here that either puts a FileStats
+* object onto the end of the Array or takes one from the front.
 *|----------------------------------------------------------------------------|
 *|                           CRC: Buffer                                      |
 *|----------------------------------------------------------------------------|

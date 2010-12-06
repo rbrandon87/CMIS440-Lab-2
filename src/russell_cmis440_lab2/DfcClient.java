@@ -214,6 +214,11 @@ public class DfcClient extends SwingWorker<Void, Void>{
     @Override
     public void done(){
         try {
+            /**
+             * The doInBackground method here doesn't really return anything,
+             * other than what the setProgress() method returns so I just have
+             * this get() method here for completion.
+             */
             setProgress(95);//Update GUI progress bar.
             get();
         } catch (final InterruptedException ex) {
@@ -237,6 +242,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
     *           being processed.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
+    * @exception Exception general exception capture
     */
     private String getNumOfFiles(){
         try{
@@ -247,8 +253,8 @@ public class DfcClient extends SwingWorker<Void, Void>{
              * server.
              */
             return Integer.toString(myNumOfFiles);
-        }catch (NumberFormatException exception){
-            JOptionPane.showMessageDialog(null,"Number Format Exception on "
+        }catch (Exception exception){
+            JOptionPane.showMessageDialog(null,"Unknown Exception on "
                     + "number of files returned.\n" + exception.getMessage(),
                     "Number Format Exception",
                     JOptionPane.ERROR_MESSAGE);
