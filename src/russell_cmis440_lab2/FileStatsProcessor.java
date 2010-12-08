@@ -1,8 +1,8 @@
 package russell_cmis440_lab2;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.net.DatagramPacket; //For sending data
+import java.net.DatagramSocket; //For creating a connection to send data
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.net.SocketException;
@@ -178,7 +178,9 @@ public class FileStatsProcessor implements Runnable{
             numOfBytesSent += mySendPacket.getLength();
             /**
              * Update GUI with number of bytes sent and then sleeps for a short
-             * period of time.
+             * period of time. NetBeans will put a warning out for the use of
+             * Thread.sleep because of potential performance issues, but
+             * I feel it is necessary to have to ensure data doesn't get lost.
              */
             updateClientBytesSentLabel.setText(String.valueOf(numOfBytesSent));
                 Thread.sleep(sleepTime);

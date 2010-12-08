@@ -1,8 +1,8 @@
 package russell_cmis440_lab2;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.net.DatagramPacket; //For receiving data
+import java.net.DatagramSocket; //For creating a connection to receive data
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import javax.swing.JTextArea;
@@ -137,6 +137,7 @@ public class UdpServer implements Runnable {
     * @exception SocketException for DatagramSocket creation
     * @exception IOException for DatagramSocket traffic
     * @exception NullPointerException when two servers tries to run on same port
+    * @exception NumberFormatException for use of Integer.parseInt method
     * @exception Exception general exception capture
     */
     public void run(){
@@ -194,6 +195,10 @@ public class UdpServer implements Runnable {
                 while (matcher.find()){
                     if (matcher.group(1).length() != 0 &&
                             matcher.group(2).length() != 0){
+                        /**
+                         * If the regex matches and both groups hold data then
+                         * add them to the Map.
+                         */
                         addToTotalWordMap(Integer.parseInt(matcher.group(1)),
                                 Integer.parseInt(matcher.group(2)));
                         updateTotalOutputTextArea.setText(this.toString());
@@ -232,6 +237,12 @@ public class UdpServer implements Runnable {
                 JOptionPane.showMessageDialog(null,"IO Exception "
                         + "on UdpServer run.\n" + exception.getMessage(),
                         "Socket Exception",
+                        JOptionPane.ERROR_MESSAGE);
+            }catch (NumberFormatException exception) {
+                JOptionPane.showMessageDialog(null,"Number Format Exception "
+                        + "on UdpServer run.\n"
+                        + exception.getMessage(),
+                        "Number Format Exception",
                         JOptionPane.ERROR_MESSAGE);
             }catch (NullPointerException exception) {
                 JOptionPane.showMessageDialog(null,"Null Pointer Exception "
@@ -343,6 +354,10 @@ public class UdpServer implements Runnable {
         String formattedLine = "";
         int maxLength = 15; //Padding between word length and count/readability
         int numberOfWords = 0;
+        /**
+         * format defines a standard format for the output to assist with
+         * readability.
+         */
         String format = "|%1$-"+ maxLength +"s | %2$"+ maxLength +"s|\n";
 
         myFormattedResults.append("-----------------------------------\n");

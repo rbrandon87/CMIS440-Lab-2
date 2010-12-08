@@ -10,7 +10,7 @@ import javax.swing.SwingWorker; //Worker Thread to free up GUI Thread
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JOptionPane; //For Exception Handling
-import javax.swing.JLabel;
+import javax.swing.JLabel; //For Passing reference to FileStatsProcessor
 
 /**
 * Program Name: CMIS440 Lab 2 Client/Server Word Length Counter
@@ -121,7 +121,7 @@ public class DfcClient extends SwingWorker<Void, Void>{
                 throw new Exception("Must Specify atleast one text file.");
             }
 
-            mySharedBuffer = new Buffer();
+            mySharedBuffer = new Buffer();//Will Hold FileStat objects
             myFileStatsProcessor = new FileStatsProcessor(aServerIpAddress, 
                     aServerPort, mySharedBuffer, getNumOfFiles(),
                     alblClientBytesSent);
@@ -166,6 +166,11 @@ public class DfcClient extends SwingWorker<Void, Void>{
             for(progress=0; progress< myFileNames.length; progress++){
                 myApplication.execute( new FileProcessor(myFileNames[progress],
                                                                mySharedBuffer));
+                /**
+                 * For the setProgress method below, it basically uses Math.min
+                 * to return the smallest number between the variable 'progress'
+                 * and 90.
+                 */
                 setProgress(Math.min(progress, 90));//Update GUI progress bar.
             }
 

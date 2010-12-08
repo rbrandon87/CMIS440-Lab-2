@@ -154,8 +154,16 @@ public class FileStats {
         String formattedLine = "";
         int maxLength = 15;
         int numberOfWords = 0;
+        /**
+         * format defines a standard format for the output to assist with
+         * readability.
+         */
         String format = "|%1$-"+ maxLength +"s | %2$"+ maxLength +"s|\n";
 
+        /**
+         * Below takes a substring of the filename so that only the filename
+         * is printed and not the entire path of the filename.
+         */
         formattedLine = "FileName: " + this.getFileName().substring(
                 this.getFileName().lastIndexOf("\\") + 1) + " contains:";
         myFormattedResults.append(formattedLine);
@@ -172,7 +180,7 @@ public class FileStats {
         for (Integer key : sortedKeys){
             /**
              * If key is less than 15 characters print the entire key, otherwise
-             * print a substring of the key contains the first 15 characters.
+             * print a substring of the keys first 15 characters.
              */
             formattedLine = String.format(format,key.toString().length() <= 
                     maxLength ? key : key.toString().substring(0, maxLength),

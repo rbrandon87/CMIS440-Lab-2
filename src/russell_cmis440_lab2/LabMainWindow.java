@@ -74,7 +74,10 @@ package russell_cmis440_lab2;
 *
 *
 * Things you what me to know before I grade your work: I used the NetBeans
-* Graphic designer to create the GUI portion of this program.
+* Graphic designer to create the GUI portion of this program. Also, in the
+* FileStatsProcessor class I made use of Thread.sleep. In NetBeans it has a
+* warning associated with it because of possible performance problems, however
+* I feel it is necessary to have to ensure data doesn't get lost.
 */
 
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -842,6 +845,7 @@ public class LabMainWindow extends javax.swing.JFrame
     * @exception ClassNotFoundException for UIManager method
     * @exception InstantiationException for UIManager method
     * @exception IllegalAccessException for UIManager method
+    * @exception Exception general exception capture
     */
     public static void main(String args[]) {
         try{
@@ -851,19 +855,24 @@ public class LabMainWindow extends javax.swing.JFrame
 
         }catch (UnsupportedLookAndFeelException exception) {
             JOptionPane.showMessageDialog(null,exception.getMessage(),
-                    "Exception Thrown on UIManager",
+                    "UnsupportedLookAndFeelException Exception Thrown on"
+                    + " UIManager",
                     JOptionPane.ERROR_MESSAGE);
         }catch (ClassNotFoundException exception) {
             JOptionPane.showMessageDialog(null,exception.getMessage(),
-                    "Exception Thrown on UIManager",
+                    "ClassNotFoundException Exception Thrown on UIManager",
                     JOptionPane.ERROR_MESSAGE);
         }catch (InstantiationException exception) {
             JOptionPane.showMessageDialog(null,exception.getMessage(),
-                    "Exception Thrown on UIManager",
+                    "InstantiationException Exception Thrown on UIManager",
                     JOptionPane.ERROR_MESSAGE);
         }catch (IllegalAccessException exception) {
             JOptionPane.showMessageDialog(null,exception.getMessage(),
-                    "Exception Thrown on UIManager",
+                    "IllegalAccessException Exception Thrown on UIManager",
+                    JOptionPane.ERROR_MESSAGE);
+        }catch (Exception exception) {
+            JOptionPane.showMessageDialog(null,exception.getMessage(),
+                    "Unknown Exception Thrown on UIManager",
                     JOptionPane.ERROR_MESSAGE);
         }
 
@@ -912,6 +921,10 @@ public class LabMainWindow extends javax.swing.JFrame
                         + "to be correct. Would you like to change it?",
                         "IP Address Warning",JOptionPane.YES_NO_OPTION);
                 if (tempHoldJOptionAnswer == JOptionPane.YES_OPTION){
+                    /**
+                     * If user decides to change the IP address, then return
+                     * from method and do nothing.
+                     */
                     return;
                 }
             }
