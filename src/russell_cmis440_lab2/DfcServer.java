@@ -27,7 +27,7 @@ import java.net.SocketException;
 *|----------------------------------------------------------------------------|
 *|Create an instance of UdpServer on it's on Thread              UdpServer    |
 *|                                                                            |
- |                                                                            |
+*|                                                                            |
 *|----------------------------------------------------------------------------|
 *
 * @TheCs Cohesion - All methods in this class work together on similar task.

@@ -116,8 +116,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 *               the same basic rules.
 */
 
-
-
         
 public class LabMainWindow extends javax.swing.JFrame 
         implements PropertyChangeListener{
@@ -804,14 +802,15 @@ public class LabMainWindow extends javax.swing.JFrame
             "Server Instructions", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_serverInstructionsMenuItemActionPerformed
 
-    /** Allows user to copy the selected text from the txtOutput TextArea.
-    * @TheCs Cohesion - Allow user to copy the text from the txtOutput TextArea.
-    * Completeness - Completely lets one copy selected text from the txtOutput
-    *                TextArea.
-    * Convenience - Simply allows one to copy selected text from the txtOutput
-    *               TextArea
+    /** Allows user to copy the selected text from the txtTotalOutput TextArea.
+    * @TheCs Cohesion - Allow user to copy the text from the txtTotalOutput
+    *                   TextArea.
+    * Completeness - Completely lets one copy selected text from the 
+    *                txtTotalOutput TextArea.
+    * Convenience - Simply allows one to copy selected text from the 
+    *               txtTotalOutput TextArea.
     * Clarity - It is simple to understand that this allows one to copy selected
-    *           text from the txtOutput TextArea.
+    *           text from the txtTotalOutput TextArea.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     */

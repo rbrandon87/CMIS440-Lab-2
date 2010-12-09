@@ -30,7 +30,7 @@ import java.util.regex.*;
 *|----------------------------------------------------------------------------|
 *|Listen on specified port                                    DfcServer       |
 *|Update GUI Components                                       LabMainWindow   |
- |                                                                            |
+*|                                                                            |
 *|----------------------------------------------------------------------------|
 *
 * @TheCs Cohesion - All methods in this class work together on similar task.
@@ -94,7 +94,11 @@ public class UdpServer implements Runnable {
              * to listen for traffic.
              */
             myListenSocket = new DatagramSocket(aServerPort);
-            
+
+            /**
+             * Everything below in this constructor is just preparing the GUI
+             * controls to start receiving data.
+             */
             updateOutputTextArea = aJOutputTextArea;
             updateOutputTextArea.setText("");
             updateTotalOutputTextArea = aTxtTotalOutput;
@@ -122,15 +126,14 @@ public class UdpServer implements Runnable {
         }
     }
 
-    /** Constructor for UdpServer; initializes variables and GUI references
-    * @TheCs Cohesion - Constructor for UdpServer; initializes variables
-    *                   and GUI references.
-    * Completeness - Completely constructs for UdpServer; initializes
-    *                variables and GUI references.
-    * Convenience - Simply constructs for UdpServer; initializes
-    *                variables and GUI references.
-    * Clarity - It is simple to understand that this constructs for UdpServer;
-    *           initializes variables and GUI references.
+    /**Creates a UDP connection and waits to receives data.
+    * @TheCs Cohesion - Creates a UDP connection and waits to receives data.
+    * Completeness - Completely creates a UDP connection and waits to receives
+    *                data.
+    * Convenience - Simply creates a UDP connection and waits to receives
+    *                data.
+    * Clarity - It is simple to understand that this creates a UDP connection
+    *           and waits to receives data.
     * Consistency - It uses the same syntax rules as the rest of the class and
     *               continues to use proper casing and indentation.
     * @exception SocketTimeoutException determines when not receiving data

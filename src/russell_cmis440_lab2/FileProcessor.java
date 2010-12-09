@@ -62,6 +62,10 @@ public class FileProcessor implements Runnable{
     public FileProcessor(String afileNameString,Buffer aSharedBuffer){
         myFileNameString = afileNameString;
         mySharedBuffer = aSharedBuffer;
+        /**
+         * Creates a new FileStats Buffer with given filename. This will hold
+         * all the data from the file being processed here.
+         */
         myFileStats = new FileStats(myFileNameString);
 
     }
@@ -94,13 +98,20 @@ public class FileProcessor implements Runnable{
                     new File(myFileNameString));
             readInputFile.useDelimiter("\\z");
             myTempLineHolder = readInputFile.next();
+            /**
+             * Since the entire file is read into the variable I will close the
+             * file here since it is no longer needed.
+             */
+            if (readInputFile != null){//Make sure it isn't null first
+                readInputFile.close();//File no longer needed, close it.
+            }
 
             /**
              * This regex will match against the entire file and will attempt
              * to find a word, a word being any alphabetic character plus an
              * apostophe, and will place this word into a group. A loop will
              * then go through all the groups and if their length is not zero
-             * the length will be add to the FileStats object for this file.
+             * the length will be added to the FileStats object for this file.
              */
             String extRegex = "([\\p{Alpha},\\']*)";
             Pattern pattern = Pattern.compile(extRegex, Pattern.MULTILINE);
@@ -129,20 +140,6 @@ public class FileProcessor implements Runnable{
             JOptionPane.showMessageDialog(null, "Unknown exception thrown.\n"
                     + exception.getMessage(),
                     "Exception Thrown", JOptionPane.ERROR_MESSAGE);
-        }finally{
-            try{
-                if(readInputFile != null){
-                    /**
-                     * Attempt to close file if file object is not null.
-                     */
-                    readInputFile.close();
-                }
-            }catch(Exception exception){
-                JOptionPane.showMessageDialog(null, "Exception thrown on "
-                        + "file read.\n" + exception.getMessage(),
-                    "I/O Exception Thrown", JOptionPane.ERROR_MESSAGE);
-            }
-
         }
 
     }

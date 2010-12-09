@@ -28,7 +28,7 @@ import javax.swing.JOptionPane; //For Exception handling
 *|----------------------------------------------------------------------------|
 *|Send data in buffer to server                               Buffer          |
 *|Update GUI Components                                       LabMainWindow   |
- |                                                                            |
+*|                                                                            |
 *|----------------------------------------------------------------------------|
 *
 * @TheCs Cohesion - All methods in this class work together on similar task.

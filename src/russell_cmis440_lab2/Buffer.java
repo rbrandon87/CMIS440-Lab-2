@@ -38,7 +38,6 @@ import javax.swing.JOptionPane; //For Exception Handling
 
 
 
-
 public class Buffer implements IBuffer {
 
     private final ArrayBlockingQueue<FileStats> mySharedBuffer;
