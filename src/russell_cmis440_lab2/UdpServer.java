@@ -236,28 +236,33 @@ public class UdpServer implements Runnable {
                             "Socket Exception",
                             JOptionPane.ERROR_MESSAGE);
                 }
+                break;//break out of while loop
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(null,"IO Exception "
                         + "on UdpServer run.\n" + exception.getMessage(),
                         "Socket Exception",
                         JOptionPane.ERROR_MESSAGE);
+                break;//break out of while loop
             }catch (NumberFormatException exception) {
                 JOptionPane.showMessageDialog(null,"Number Format Exception "
                         + "on UdpServer run.\n"
                         + exception.getMessage(),
                         "Number Format Exception",
                         JOptionPane.ERROR_MESSAGE);
+                break;//break out of while loop
             }catch (NullPointerException exception) {
                 JOptionPane.showMessageDialog(null,"Null Pointer Exception "
                         + "on UdpServer run.\n"
                         + exception.getMessage(),
                         "Null Pointer Exception",
                         JOptionPane.ERROR_MESSAGE);
+                break;//break out of while loop
             }catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,"Unknown Exception "
                         + "on UdpServer run.\n" + exception.getMessage(),
                         "Unknown Exception",
                         JOptionPane.ERROR_MESSAGE);
+                break;//break out of while loop
             }
 
         }

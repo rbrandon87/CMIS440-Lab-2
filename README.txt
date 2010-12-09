@@ -79,6 +79,13 @@ I feel it is necessary to have to ensure data doesn't get lost.
 
 Git Log
 --------
+
+commit 937eff4f28d548b95cf5fd3ca73cbd9be778aed8
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Thu Dec 9 20:43:32 2010 -0100
+
+    Updated README
+
 commit 807b9d440b83db6808d42f9b12f7684d59f53474
 Author: Brandon Russell <rbrandon87@gmail.com>
 Date:   Thu Dec 9 20:39:55 2010 -0100
