@@ -80,6 +80,12 @@ I feel it is necessary to have to ensure data doesn't get lost.
 Git Log
 --------
 
+commit 328ce4701785add86021c9122e98efc8286d69cf
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Thu Dec 9 22:56:01 2010 -0100
+
+    Fixed UdpServer While Loop issue
+
 commit 937eff4f28d548b95cf5fd3ca73cbd9be778aed8
 Author: Brandon Russell <rbrandon87@gmail.com>
 Date:   Thu Dec 9 20:43:32 2010 -0100
