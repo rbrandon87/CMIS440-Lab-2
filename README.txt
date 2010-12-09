@@ -71,10 +71,43 @@ can designate the IP address of the server, on the client side, as localhost.
 
 
 Things you what me to know before I grade your work: I used the NetBeans
-Graphic designer to create the GUI portion of this program.
+Graphic designer to create the GUI portion of this program. Also, in the
+FileStatsProcessor class I made use of Thread.sleep. In NetBeans it has a
+warning associated with it because of possible performance problems, however
+I feel it is necessary to have to ensure data doesn't get lost.
+
 
 Git Log
 --------
+commit 807b9d440b83db6808d42f9b12f7684d59f53474
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Thu Dec 9 20:39:55 2010 -0100
+
+    Minor stuff to comments. More debugging. Everything is checking good. Updated README and UML
+
+commit 0d66d46748e221ca032e517e17224b8385b5a1f6
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Wed Dec 8 20:39:05 2010 -0100
+
+    Added more comments. Checked exception handling, tested program more, everything is good
+
+commit 36c84a666e56dc98e305f3dbac6e85ca7a0818de
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Mon Dec 6 21:03:10 2010 -0100
+
+    Did some testing/debugging. Minor comment fixes. Generated JavaDoc and Fresh Build
+
+commit 80bee29c4c73392110a5d8c9a431ccbfa3974e45
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Sun Dec 5 20:25:57 2010 -0100
+
+    Minor UI corrections and comment changes
+
+commit c9edc28dc4cd57e7683de6cef0550c6d91b2db9a
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Sat Dec 4 17:44:18 2010 -0100
+
+    Generated JavaDocs, Updated README, Updated UML
 
 commit b328f7951b7777d46e8086c3aea19841abdae664
 Author: Brandon Russell <rbrandon87@gmail.com>
