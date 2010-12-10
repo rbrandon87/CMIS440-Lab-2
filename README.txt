@@ -80,6 +80,12 @@ I feel it is necessary to have to ensure data doesn't get lost.
 Git Log
 --------
 
+commit 0654f7c119505c437d8c5d15860ceefc0374b54f
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Thu Dec 9 22:57:51 2010 -0100
+
+    Updated README
+
 commit 328ce4701785add86021c9122e98efc8286d69cf
 Author: Brandon Russell <rbrandon87@gmail.com>
 Date:   Thu Dec 9 22:56:01 2010 -0100

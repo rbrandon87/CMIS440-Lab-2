@@ -1029,7 +1029,6 @@ public class LabMainWindow extends javax.swing.JFrame
              */
             InetAddress myNetworkIp = InetAddress.getLocalHost();
             lblServerActualIp.setText(myNetworkIp.getHostAddress());
-            ServerRun = true;//Used by UdpServer to loop, waiting for data.
             setServerControlsToWait();//Disable Start buttons/Byte Counters to 0
 
             /**
@@ -1077,8 +1076,6 @@ public class LabMainWindow extends javax.swing.JFrame
     */
     private void stopServerListening(){
         try{
-            //ServerRun to false will tell UdpServer loop to stop
-            ServerRun = false;
             if (myDfcServer != null){
                 /**
                  * Call myUdpServer.stopIncomingConnections to close the
@@ -1213,7 +1210,6 @@ public class LabMainWindow extends javax.swing.JFrame
 
 
 
-    public static boolean ServerRun = true; //Control loop in UdpServer
     DfcServer myDfcServer = null; //Start Server Listening for Data
     DfcClient myDfcClient = null; //Start Client to Send Data
     // Variables declaration - do not modify//GEN-BEGIN:variables

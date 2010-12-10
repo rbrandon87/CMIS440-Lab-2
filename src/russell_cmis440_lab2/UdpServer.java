@@ -64,6 +64,7 @@ public class UdpServer implements Runnable {
     private final int MINWAITTIME = 1000;//Socket Timeout
     private final int MAXWAITTIME = 2000;//Socket Timeout
     private final int PACKETSIZE = 4096;// Size of byte array for receiving
+    private boolean ServerRun = true; //Control loop in UdpServer
 
     /** Constructor for UdpServer; initializes variables and GUI references
     * @TheCs Cohesion - Constructor for UdpServer; initializes variables
@@ -150,7 +151,7 @@ public class UdpServer implements Runnable {
          * It will determine when the loop should stop working. Mainly when
          * the 'Stop Listening' button is pushed.
          */
-        while(LabMainWindow.ServerRun) {
+        while(ServerRun) {
             try {
                 /**
                  * PACKETSIZE can be adjusted to find best size to prevent data
@@ -285,6 +286,7 @@ public class UdpServer implements Runnable {
     */
     public void stopIncomingConnections(){
         try{
+            ServerRun = false;//Stop loop from receiving data
             myListenSocket.close();
         }catch(Exception exception){
             JOptionPane.showMessageDialog(null,"Unknown Exception "
