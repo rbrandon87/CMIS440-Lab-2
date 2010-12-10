@@ -79,6 +79,11 @@ I feel it is necessary to have to ensure data doesn't get lost.
 
 Git Log
 --------
+commit e07718b825acf20162257ca5c17a570417dd5007
+Author: Brandon Russell <rbrandon87@gmail.com>
+Date:   Fri Dec 10 20:39:16 2010 -0100
+
+    Fixed ServerRun static variable to not be static. Updated JavaDoc and UML
 
 commit 0654f7c119505c437d8c5d15860ceefc0374b54f
 Author: Brandon Russell <rbrandon87@gmail.com>
